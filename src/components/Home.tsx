@@ -6,7 +6,7 @@ const Home = () => {
   const [active, setActive] = useState("Home")
   return (
     <div className="relative h-screen">
-      <img src="../src/assets/img/home.png" alt="" className="h-full w-full object-fit absolute -z-10 filter brightness-75"/>
+      <img src="../src/assets/img/home.jpg" alt="" className="h-full w-full object-fit absolute -z-10 filter brightness-75"/>
       <div className="flex justify-between w-full bg-[#090c28] text-white pl-2 pr-2 pt-4 pb-4">
         <div className="flex items-center w-1/3">
           <GiFlexibleStar className="text-5xl" />
