@@ -40,18 +40,18 @@ const VietnamMap = (() => {
     `;
 
     return (
-        <div className='bg-transparent flex w-[100vw] h-[calc(100vh-80px)]'>
+        <div className='bg-transparent flex h-[calc(100vh-60px)]'>
             <div className='flex items-center justify-end w-1/2'>
                 <div className='flex-col justify-center flex'>
-                    <p className='text-[55px] text-white font-bold mb-5'>Explore of Vietnam</p>
+                    <p className='text-5xl text-white font-bold mb-5'>Explore of Vietnam</p>
                     <p className='text-white mb-5 text-xl'>Search for the city location you want to explore</p>
                     <div className='flex items-center'>
-                        <input className={`rounded-l-3xl p-4 w-[100%] text-xl ${input === null ? "" : "placeholder-black"}`}
+                        <input className={`rounded-l-3xl p-3 pl-4 w-[100%] text-lg ${input === null ? "" : "placeholder-black"}`}
                             value={input || search || ""}
                             onChange={handleSearch}
                             placeholder="Search..."
                         />
-                        <span className='text-white bg-red-500 pt-5 pb-5 pl-5 pr-6 text-xl cursor-pointer rounded-r-3xl'><FaSearch /></span>
+                        <span className='text-white bg-red-500 pt-4 pb-4 pl-5 pr-6 text-xl cursor-pointer rounded-r-3xl'><FaSearch /></span>
                     </div>
                 </div>
             </div>
