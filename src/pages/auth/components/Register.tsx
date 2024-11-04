@@ -53,8 +53,8 @@ const Register = () => {
     }
   };
   return (
-    <div className="p-5 py-10 bg-opacity-80 bg-white flex flex-col gap-5 items-center rounded-xl shadow-2xl">
-      <h1 className="font-semibold text-4xl">Register</h1>
+    <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-80 p-5 py-10 shadow-2xl">
+      <h1 className="text-4xl font-semibold">Register</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
         <div>
           <label className="font-semibold" htmlFor="name">
@@ -139,7 +139,7 @@ const Register = () => {
             </p>
           )}
         </div>
-        <div className="flex items-center gap-2 justify-around">
+        <div className="flex items-center justify-around gap-2">
           <Button
             onClick={() => navigate("/auth/login")}
             className="px-8"

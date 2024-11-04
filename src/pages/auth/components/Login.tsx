@@ -33,7 +33,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        data
+        data,
       );
       message.success("Login successful");
       localStorage.setItem("token", response.data.token);
@@ -50,8 +50,8 @@ const Login = () => {
     }
   };
   return (
-    <div className="p-5 bg-opacity-80 bg-white flex flex-col gap-5 items-center rounded-xl shadow-2xl">
-      <h1 className="font-semibold text-4xl">Login</h1>
+    <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-80 p-5 shadow-2xl">
+      <h1 className="text-4xl font-semibold">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
         <div>
           <label className="font-semibold" htmlFor="email">
@@ -107,7 +107,7 @@ const Login = () => {
             Don't have an account?{" "}
             <span
               onClick={() => navigate("/auth/register")}
-              className="font-semibold cursor-pointer"
+              className="cursor-pointer font-semibold"
             >
               Register
             </span>
