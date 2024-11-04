@@ -57,8 +57,8 @@ const Register = () => {
       <h1 className="text-4xl font-semibold">Register</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
         <div>
-          <label className="font-semibold" htmlFor="name">
-            Name<span className="text-red-500">*</span>:
+          <label className="mb-2 font-semibold" htmlFor="name">
+            Name<span className="mb-2 text-red-500">*</span>:
           </label>
           <Controller
             control={control}
