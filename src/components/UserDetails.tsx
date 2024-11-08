@@ -1,9 +1,20 @@
 import React from 'react'
 
-function UserDetails() {
+const UserDetails : React.FC = () => {
   return (
     <div>
-      
+      <div className="userprofile">
+
+      </div>
+
+      <div className="userdetailssection">
+        <div className="user-nav">
+
+        </div>
+        <div className="userdetail">
+        
+        </div>
+      </div>
     </div>
   )
 }
