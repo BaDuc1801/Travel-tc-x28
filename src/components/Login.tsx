@@ -37,7 +37,7 @@ const Login = () => {
       );
       message.success("Login successful");
       localStorage.setItem("token", response.data.token);
-      navigate("/auth/login");
+      navigate("/home");
     } catch (err) {
       console.error(err);
       if (axios.isAxiosError(err)) {
