@@ -10,7 +10,7 @@ interface DestinationCardProps {
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ city, name, description, image }) => {
   return (
-    <div className="destination-card p-4 rounded-lg shadow-lg bg-white">
+    <div className="destination-card p-4 rounded-lg shadow-lg bg-white cursor-pointer">
       <img src={image} alt={name} className="h-48 w-full object-cover rounded-md" />
       <p className="text-gray-500 mt-2 flex items-center gap-1"><span className="text-red-500"><FaLocationDot />
       </span>{city}</p>
