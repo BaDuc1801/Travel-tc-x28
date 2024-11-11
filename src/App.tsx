@@ -4,7 +4,7 @@ import ListPosts from "./components/posts&comments/ListPosts.tsx";
 import Auth from "./components/Auth.tsx";
 import Login from "./components/Login.tsx";
 import Register from "./components/Register.tsx";
-import UserDetails from "./components/UserDetails.tsx";
+import UserProfile from "./components/UserProfile.tsx";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="register" element={<Register />} />
       </Route> 
 
-      <Route path="/profile" element={<UserDetails />} />
+      <Route path="/profile" element={<UserProfile />} />
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
