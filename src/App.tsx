@@ -1,18 +1,20 @@
 import Home from "./components/Home";
 import { Route, Routes, Navigate } from "react-router-dom";
-import Auth from "./pages/auth/Auth.js";
-import Login from "./pages/auth/components/Login.js";
-import Register from "./pages/auth/components/Register.js";
-import UserDetails from "./components/UserDetails";
+import ListPosts from "./components/posts&comments/ListPosts.tsx";
+import Auth from "./components/Auth.tsx";
+import Login from "./components/Login.tsx";
+import Register from "./components/Register.tsx";
+import UserDetails from "./components/UserDetails.tsx";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/home" element={<Home />} />
-      {/* <Route path="/auth" element={<Auth />}>
+      <Route path="" element={<ListPosts/>} />
+      <Route path="/auth" element={<Auth />}>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-      </Route> */}
+      </Route> 
 
       <Route path="/profile" element={<UserDetails />} />
       <Route path="*" element={<Navigate to="/auth/login" />} />

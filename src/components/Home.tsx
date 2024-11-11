@@ -1,81 +1,38 @@
 import { GiFlexibleStar } from "react-icons/gi"
 import VietnamMap from "./VietnamMap.tsx"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import homeImg from "../assets/img/home.jpg"
 import DestinationCard from "./DestinationCard.tsx"
 import Footer from "./Footer.tsx"
+import axios from "axios"
+import { Link } from "react-router-dom"
 
+interface DestinationCardType {
+  city: string;
+  destiName: string;
+  description: string;
+  img: string;
+}
 const Home = () => {
   const [active, setActive] = useState("Home")
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [desti, setDesti] = useState<DestinationCardType[]>([])
+
+
+  useEffect(() => {
+    const fetchData = async () :  Promise<void>  => {
+      const data = await axios.get("https://be-travel-tc-x28-1end.vercel.app/destinations");
+      setDesti(data.data);
+    }
+    fetchData();
+  }, [])
 
   const toggleMenu = () => {
     setShowMenu((prevShowMenu) => !prevShowMenu);
   };
 
-  const destinations = [
-    {
-      city: "Hà Nội",
-      name: "Hồ Hoàn Kiếm",
-      description: "Biểu tượng của thủ đô Hà Nội, nơi có Tháp Rùa và cầu Thê Húc nối với đền Ngọc Sơn.",
-      image: homeImg
-    },
-    {
-      city: "Hạ Long",
-      name: "Vịnh Hạ Long",
-      description: "Di sản thiên nhiên thế giới, nổi tiếng với hàng nghìn đảo đá vôi tuyệt đẹp giữa biển khơi.",
-      image: homeImg
-    },
-    {
-      city: "Huế",
-      name: "Đại Nội Huế",
-      description: "Kinh thành cổ kính của triều Nguyễn, nơi lưu giữ những giá trị văn hóa và lịch sử đặc sắc.",
-      image: homeImg
-    },
-    {
-      city: "Đà Nẵng",
-      name: "Cầu Rồng",
-      description: "Cây cầu nổi tiếng với kiến trúc hình rồng độc đáo và màn phun lửa, phun nước vào cuối tuần.",
-      image: homeImg
-    },
-    // {
-    //   city: "Hội An",
-    //   name: "Phố cổ Hội An",
-    //   description: "Khu phố cổ quyến rũ với kiến trúc cổ xưa, những con đường đèn lồng và không khí yên bình.",
-    //   image: homeImg
-    // },
-    // {
-    //   city: "Nha Trang",
-    //   name: "Tháp Bà Ponagar",
-    //   description: "Khu di tích Champa cổ xưa với kiến trúc độc đáo nằm giữa thiên nhiên tươi đẹp.",
-    //   image: homeImg
-    // },
-    // {
-    //   city: "Đà Lạt",
-    //   name: "Thung Lũng Tình Yêu",
-    //   description: "Địa điểm thơ mộng với cảnh quan thiên nhiên tươi đẹp, nổi tiếng là nơi lãng mạn cho các cặp đôi.",
-    //   image: homeImg
-    // },
-    // {
-    //   city: "Phú Quốc",
-    //   name: "Bãi Sao",
-    //   description: "Bãi biển cát trắng mịn, nước trong xanh, là điểm đến lý tưởng cho kỳ nghỉ biển.",
-    //   image: homeImg
-    // },
-    // {
-    //   city: "Cần Thơ",
-    //   name: "Chợ Nổi Cái Răng",
-    //   description: "Chợ nổi đặc trưng của miền Tây Nam Bộ, nơi bạn có thể trải nghiệm cuộc sống sông nước.",
-    //   image: homeImg
-    // },
-    // {
-    //   city: "TP. Hồ Chí Minh",
-    //   name: "Nhà Thờ Đức Bà",
-    //   description: "Công trình kiến trúc Pháp nổi tiếng, biểu tượng của TP. Hồ Chí Minh.",
-    //   image: homeImg
-    // }
-  ];
-
+  const isAuthenticated = window.localStorage.getItem('authenticated') === 'true';
+  const user: any = JSON.parse(localStorage.getItem('user') || '{}');
 
   return (
     <div className="relative h-screen">
@@ -91,23 +48,23 @@ const Home = () => {
           <a href="#" className={(active === "Explore") ? "text-red-400" : "white"} onClick={() => { setActive("Explore") }}>Explore</a>
           <a href="#" className={(active === "Destinations") ? "text-red-400" : "white"} onClick={() => { setActive("Destinations") }}>Destinations</a>
         </div>
-        {false ?
+        {!isAuthenticated ?
           <div className="flex gap-6 text-xl w-1/3 justify-end">
             <button className="hover:text-red-400 rounded-lg">Sign in</button>
             <button className="hover:bg-red-500 rounded-lg pl-4 pr-4 pt-2 pb-2 bg-red-400">Sign up</button>
           </div> :
           <div className="flex items-center gap-2 w-1/3 justify-end">
-            <p>User's Name</p>
-            <div className="h-10 w-10 rounded-full relative bg-red-500 group cursor-pointer" onClick={toggleMenu}>
+            <p>{user.name}</p>
+            <div className="h-10 w-10 relative group cursor-pointer " onClick={toggleMenu}>
+              <img src={user.profilePic.profilePicture} className="rounded-full"/>
               {showMenu && (
                 <>
                   <div className="absolute top-[40px] right-0 z-10 rounded-md overflow-hidden bg-white">
                     <a className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</a>
-                    <a className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</a>
+                    <Link to={'/login'} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
                   </div>
                 </>
               )}
-
             </div>
           </div>
 
@@ -119,14 +76,14 @@ const Home = () => {
       <div className="pl-20 pr-20 pt-16">
         <p className="text-3xl font-semibold">Must-See Destinations</p>
         <p className="text-lg text-gray-500 mt-2 mb-2">Get inspired for your next trip with these must-visit locations.</p>
-        <div className="grid grid-cols-4 gap-4 mt-4">
-          {destinations.map((destination, index) => (
+        <div className="grid grid-cols-4 gap-6 mt-4">
+          {desti.map((destination, index) => (
             <DestinationCard
               key={index}
               city={destination.city}
-              name={destination.name}
+              name={destination.destiName}
               description={destination.description}
-              image={destination.image}
+              image={destination.img}
             />
           ))}
         </div>

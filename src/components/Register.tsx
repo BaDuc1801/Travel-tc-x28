@@ -38,7 +38,7 @@ const Register = () => {
 
   const onSubmit = async (data: IDataRegister) => {
     try {
-      await axios.post("http://localhost:8080/api/auth/register", data);
+      await axios.post("https://be-travel-tc-x28-1end.vercel.app/api/auth/register", data);
       message.success("Registration successful");
       navigate("/auth/login");
     } catch (err) {
@@ -53,8 +53,8 @@ const Register = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-80 p-5 py-10 shadow-2xl">
-      <h1 className="text-4xl font-semibold">Register</h1>
+    <div className="flex flex-col items-center rounded-xl bg-white bg-opacity-60 p-5 py-10 shadow-2xl">
+      <h1 className="text-4xl font-semibold mb-2">Register</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
         <div>
           <label className="mb-2 font-semibold" htmlFor="name">
@@ -68,7 +68,7 @@ const Register = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your name"
-                className="w-full"
+                className="w-full hover:border-red-300 focus:border-red-300"
               />
             )}
           />
@@ -89,7 +89,7 @@ const Register = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your email"
-                className="w-full"
+                className="w-full hover:border-red-300 focus:border-red-300"
               />
             )}
           />
@@ -109,7 +109,7 @@ const Register = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your password"
-                className="w-full"
+                className="w-full hover:border-red-300"
               />
             )}
           />
@@ -129,7 +129,7 @@ const Register = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your confirm password"
-                className="w-full"
+                className="w-full hover:border-red-300"
               />
             )}
           />
@@ -139,17 +139,17 @@ const Register = () => {
             </p>
           )}
         </div>
-        <div className="flex items-center justify-around gap-2">
+        <div className="flex justify-around">
           <Button
             onClick={() => navigate("/auth/login")}
-            className="px-8"
+            className="px-8 hover:!border-red-300 hover:!text-red-500"
             size="large"
-          >
+          >       
             Back
           </Button>
           <Button
-            htmlType="submit"
-            className="px-6"
+            htmlType="submit" 
+            className="!px-6 !bg-red-500 hover:!bg-red-600"
             type="primary"
             size="large"
           >
