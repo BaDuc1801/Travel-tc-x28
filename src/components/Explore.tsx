@@ -1,8 +1,7 @@
 import VietnamMap from "./VietnamMap.tsx"
 import homeImg from "../assets/img/home.jpg"
-import DestinationCard from "./DestinationCard.tsx"
 import Footer from "./Footer.tsx"
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+// import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 const Explore = () => {

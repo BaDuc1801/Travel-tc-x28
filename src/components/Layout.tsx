@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { GiFlexibleStar } from 'react-icons/gi';
 import { Link, Outlet } from 'react-router-dom';
 
