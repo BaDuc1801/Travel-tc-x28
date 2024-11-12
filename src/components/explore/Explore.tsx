@@ -1,13 +1,14 @@
-import VietnamMap from "./VietnamMap.tsx"
-import homeImg from "../assets/img/home.jpg"
-import Footer from "./Footer.tsx"
+// import Footer from "./Footer.tsx"
 // import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
+import VietnamMap from "./VietnamMap.tsx"
+import homeImg from "../../assets/img/home.jpg"
+import React from 'react'
 
-const Explore = () => {
+const Explore : React.FC = () => {
 
   return (
-    <div className="relative h-screen">
+    <div className="relative">
       <img src={homeImg} alt="" className="h-full w-full object-fit absolute -z-10 filter brightness-75" />
       <div className="">
         <VietnamMap />
@@ -25,9 +26,9 @@ const Explore = () => {
           </Marker>
         </MapContainer>
       </div> */}
-      <div>
+      {/* <div>
         <Footer />
-      </div>
+      </div> */}
     </div>
   )
 }
