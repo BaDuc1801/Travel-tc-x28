@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
                     <p className="text-2xl font-bold ml-2">Travel</p>
                 </div>
                 <div className="flex gap-10 items-center w-1/3 justify-center text-xl">
-                    <Link to={'/'} className={(active === "Home") ? "text-red-400" : "white"} onClick={() => { setActive("Home") }}>Home</Link>
+                    <Link to={'/home'} className={(active === "Home") ? "text-red-400" : "white"} onClick={() => { setActive("Home") }}>Home</Link>
                     <Link to={'/explore'} className={(active === "Explore") ? "text-red-400" : "white"} onClick={() => { setActive("Explore") }}>Explore</Link>
                     <a href="#" className={(active === "Destinations") ? "text-red-400" : "white"} onClick={() => { setActive("Destinations") }}>Destinations</a>
                 </div>
@@ -39,7 +39,7 @@ const Layout: React.FC = () => {
                                 <>
                                     <div className="absolute top-[40px] right-0 z-10 rounded-md overflow-hidden bg-white">
                                         <a className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</a>
-                                        <Link to={'/login'} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
+                                        <Link to={'/login'} onClick={() => {localStorage.setItem("authenticated", "false")}} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
                                     </div>
                                 </>
                             )}

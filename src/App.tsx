@@ -2,23 +2,29 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Auth from "./components/Auth.tsx";
 import Login from "./components/Login.tsx";
 import Register from "./components/Register.tsx";
-import Explore from "./components/Explore.tsx";
 import Home from "./components/Home.tsx";
 import Layout from "./components/Layout.tsx";
-// import UserProfile from "./components/UserProfile.tsx";
+import Explore from "./components/explore/Explore.tsx";
+import ExploreDetails from "./components/explore/ExploreDetails.tsx";
 
 const App = () => {
   return (
     <Routes>
-      <Route path="" element={<Layout />}>
-        <Route path="" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
+      {/* Route cho layout */}
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} /> 
+        <Route path="/home" element={<Home />} />
+        <Route path="/explore" element={<Explore />} /> 
+        <Route path="/explore/:cityName" element={<ExploreDetails />} /> 
       </Route>
+
+      {/* Route cho auth */}
       <Route path="/auth" element={<Auth />}>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-      </Route> 
-      {/* <Route path="/profile" element={<UserProfile />} /> */}
+      </Route>
+
+      {/* Route không tìm thấy */}
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
