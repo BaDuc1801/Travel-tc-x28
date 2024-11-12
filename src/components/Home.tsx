@@ -32,7 +32,7 @@ const Home = () => {
   };
 
   const isAuthenticated = window.localStorage.getItem('authenticated') === 'true';
-  const user: any = JSON.parse(localStorage.getItem('user') || '{}');
+  const user= JSON.parse(localStorage.getItem('user') || '{}');
 
   return (
     <div className="relative h-screen">

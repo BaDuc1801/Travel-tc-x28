@@ -1,6 +1,7 @@
+import { Button } from 'antd';
 import React, { useState } from 'react'
 
-const UserDetails:React.FC = () => {
+const UserDetails:React.FC = ({userData}) => {
   // State to track which section is active
   const [activeSection, setActiveSection] = useState("Overview");
 
@@ -32,11 +33,12 @@ const UserDetails:React.FC = () => {
           <p>Nationality </p>
           <p>Education </p>
           <p>Email: </p>
+          <Button>Change password </Button>
         </div>;
     }
   };
   return (
-      <div className="userdetailssection rounded-lg shadow-lg">
+      <div className="userdetailssection rounded-lg shadow mt-10">
         <div className="flex">
         {/* Left Sidebar Navigation */}
         <div className="w-1/4 p-4 border-r">

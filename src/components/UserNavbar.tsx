@@ -9,7 +9,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({activeTab, setActiveTab}) => {
   const tabs = [
     { id: "Posts", label: "Posts" },
     { id: "Followers", label: "Followers" },
-    { id: "Gallery", label: "Gallery" },
+    { id: "Library", label: "Library" },
     { id: "Details", label: "Details" },
   ];
   return (

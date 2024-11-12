@@ -12,19 +12,41 @@ const UserProfile:React.FC = () => {
 
   useEffect(()=> {
     setSearchParams({tab:activeTab});
-  }, [activeTab,setActiveTab]);
+  }, [activeTab]);
 
-  // TODO: use useSearchParams to persist navbar info, 
-  // SELECT in db to fetch specific data from server, nodemailer to send email from system
+  // API intergration
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // Async function to fetch data
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://be-travel-tc-x28-1end.vercel.app/users');
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.log('An error occurred while fetching user data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();  // Call the fetch function
+  }, []);
+
+  // TODO: SELECT in db to fetch specific data from server, nodemailer to send email from system
 
   const renderTabsContent = () => {
     switch (activeTab) {
         case "Posts":
-            return <div></div>
+            return <div>No post yet.</div>
         case "Followers":
-            return <div></div>
-        case "Gallery":
-            return <div></div>
+            return <div>No follower yet.</div>
+        case "Library":
+            return <div>No picture yet.</div>
         case "Details":
             return <UserDetails/>
         default:
@@ -32,7 +54,10 @@ const UserProfile:React.FC = () => {
     }
   }
   return (
-    <div className="mx-auto flex w-5/6 flex-col justify-center">
+      <div className="bg-red-900">
+
+      
+    <div className="mx-auto flex w-5/6 flex-col justify-center bg-white">
       <div>
         <UserPics />
       </div>
@@ -44,6 +69,7 @@ const UserProfile:React.FC = () => {
       <div>
         {renderTabsContent()}
       </div>
+    </div>
     </div>
   );
 };
