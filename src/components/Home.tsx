@@ -20,7 +20,6 @@ const Home: React.FC = () => {
         }
         fetchData();
     }, [])
-
     return (
         <div>
             <div className="m-auto w-1/3 mt-8 bg-white p-4">
