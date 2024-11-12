@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserDetails from "./UserDetails";
 import UserPics from "./UserPics";
 import UserNavbar from "./UserNavbar";
+import { useSearchParams } from "react-router-dom";
 
-const UserProfile = () => {
-  const [activeTab, setActiveTab] = useState("Posts");
+const UserProfile:React.FC = () => {
+  // tab persistence
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initTab = searchParams.get('tab') || "Posts"
+  const [activeTab, setActiveTab] = useState(initTab);
 
-  // Sections data
-  const tabs = [
-    { id: "Posts", label: "Posts" },
-    { id: "Followers", label: "Followers" },
-    { id: "Gallery", label: "Gallery" },
-    { id: "Details", label: "Details" },
-  ];
+  useEffect(()=> {
+    setSearchParams({tab:activeTab});
+  }, [activeTab,setActiveTab]);
+
+  // TODO: use useSearchParams to persist navbar info, 
+  // SELECT in db to fetch specific data from server, nodemailer to send email from system
 
   const renderTabsContent = () => {
     switch (activeTab) {
@@ -23,7 +26,7 @@ const UserProfile = () => {
         case "Gallery":
             return <div></div>
         case "Details":
-            return <div><UserDetails/></div>
+            return <UserDetails/>
         default:
             return <div></div>
     }
@@ -35,25 +38,7 @@ const UserProfile = () => {
       </div>
 
       <div>
-        {/* <UserNavbar/> */}
-        <div className="rounded-lg shadow-lg">
-          <ul className="flex space-x-4">
-            {tabs.map((tab) => (
-              <li key={tab.id}>
-                <button
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-2 text-gray-800 ${
-                    activeTab === tab.id
-                      ? "border-b-2 border-red-500"
-                      : "border-transparent"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <UserNavbar activeTab={activeTab} setActiveTab={setActiveTab}/> 
       </div>
       
       <div>

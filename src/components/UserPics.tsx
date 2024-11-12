@@ -1,12 +1,11 @@
-import { Modal } from 'antd';
-import React, { useState } from 'react'
+import { Button, Modal } from "antd";
+import React, { useState } from "react";
 
-function UserPics() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const UserPics: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   };
 
   const handleOk = () => {
@@ -18,24 +17,38 @@ function UserPics() {
   };
   return (
     <div>
-      <div className="w-full bg-white rounded-lg shadow-lg" onClick={showModal}>
-        {/* Background Image */}
-        <img className='w-full h-[200px] bg-cover bg-center' src="https://picsum.photos/300" alt="" />
-
-        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
-        {/* Profile Picture */}
-        <div className="flex flex-col items-center justify-center -mt-60">
-          <img src={"https://picsum.photos/500"} alt="Profile picture" className="w-60 h-60 rounded-full border-4 border-white object-cover"
-          />
-          <div className='p-2 font-bold text-4xl'>David Lorem</div>
-        </div>
+      <div className="w-full rounded-lg bg-white shadow-lg">
+        <img
+          className="h-[200px] w-full bg-cover bg-center"
+          src="https://picsum.photos/300"
+          alt=""
+        />
+      </div>
+      <div className="-mt-60 flex flex-col items-center justify-center">
+        <img
+          src={"https://picsum.photos/500"}
+          alt="Profile picture"
+          className="h-60 w-60 rounded-full border-4 border-white object-cover"
+          onClick={showModal}
+        />
+        <Modal
+          title="Basic Modal"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <Button className="border-red-600 text-red-700" key="cancel" onClick={handleCancel}>Cancel</Button>,
+            <Button className="text-white-500 bg-red-600" key="submit" type="primary" onClick={handleOk}>Set avatar</Button>
+          ]}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
+        <div className="p-2 text-4xl font-bold">David Lorem</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserPics
+export default UserPics;

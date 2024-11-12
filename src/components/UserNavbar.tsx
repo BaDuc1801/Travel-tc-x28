@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+interface UserNavbarProps {
+  activeTab: string;
+  setActiveTab: (tab:string) => void;
+}
 
-function UserNavbar() {
-  const [activeTab, setActiveTab] = useState("Posts");
-
+const UserNavbar: React.FC<UserNavbarProps> = ({activeTab, setActiveTab}) => {
   // Sections data
   const tabs = [
     { id: "Posts", label: "Posts" },
