@@ -33,7 +33,7 @@ const PostCard: React.FC<PostProps> = ({
     const totalComments = countTotalComments(comments);
 
     return (
-        <div className='shadow-xl p-4 rounded-lg '>
+        <div className='p-4 rounded-lg shadow-xl mt-2 bg-white'>
             <div className='flex items-center gap-2'>
                 <div className='bg-red-500 w-12 h-12 rounded-full'></div>
                 <div>
