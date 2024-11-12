@@ -5,7 +5,7 @@ import Register from "./components/Register.tsx";
 import Explore from "./components/Explore.tsx";
 import Home from "./components/Home.tsx";
 import Layout from "./components/Layout.tsx";
-import UserProfile from "./components/UserProfile.tsx";
+// import UserProfile from "./components/UserProfile.tsx";
 
 const App = () => {
   return (
@@ -18,8 +18,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route> 
-
-      <Route path="/profile" element={<UserProfile />} />
+      {/* <Route path="/profile" element={<UserProfile />} /> */}
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
