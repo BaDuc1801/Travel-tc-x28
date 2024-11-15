@@ -25,6 +25,8 @@ const App = () => {
       </Route>
 
       {/* Route không tìm thấy */}
+
+      {/* Route không tìm thấy */}
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
