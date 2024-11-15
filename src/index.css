@@ -8,6 +8,9 @@
     margin: 0;
     padding: 0;
   }
+  body{
+    background-color: #F2F4F7;
+  }
 }
 
 /* Thêm vào file CSS global của bạn */
@@ -19,4 +22,18 @@
 
 .ant-input-affix-wrapper:hover {
   border-color: #fca5a5 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 50%; 
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 10px !important;
+    color: red !important;
+    font-weight: 600 !important;
 }
