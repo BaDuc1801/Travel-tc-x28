@@ -61,7 +61,7 @@ const UserDetails:React.FC<{userData: any}> = ({userData}) => {
 
         <div className="w-3/4 p-4">
           <h2 className="font-semibold text-lg mb-4">{activeSection}</h2>
-          <div>{renderSectionContent()}</div>
+          <div className='h-screen'>{renderSectionContent()}</div>
         </div>
     </div>
       </div>
