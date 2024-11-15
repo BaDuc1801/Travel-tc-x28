@@ -19,7 +19,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({activeTab, setActiveTab}) => {
               <li key={tab.id}>
                 <button 
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-2 text-gray-800 ${
+                  className={`text-xl px-4 py-2 text-gray-800 ${
                     activeTab === tab.id ? "border-b-2 border-red-500" : "border-transparent"
                   }`}
                 >

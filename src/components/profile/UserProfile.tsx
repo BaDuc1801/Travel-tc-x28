@@ -59,7 +59,7 @@ useEffect(() => {
   const renderTabsContent = () => {
     switch (activeTab) {
         case "Posts":
-            return <div>No post yet.</div>
+            return <div className="h-screen">No post yet.</div>
         case "Followers":
             return <div>No follower yet.</div>
         case "Library":
@@ -75,7 +75,7 @@ useEffect(() => {
       
       <div className="mx-auto flex w-5/6 flex-col justify-center bg-white">
         <div>
-          <UserPics />
+          <UserPics userData={userData} />
         </div>
 
         <div>
