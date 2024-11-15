@@ -32,7 +32,7 @@ const Login = () => {
   const onSubmit = async (data: IDataLogin) => {
     try {
       const response = await axios.post(
-        "https://be-travel-tc-x28-1end.vercel.app/api/auth/login",
+        "https://be-travel-tc-x28-1end.vercel.app/user/auth/login",
         data,
       );
       message.success("Login successful");
