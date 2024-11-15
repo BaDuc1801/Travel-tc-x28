@@ -32,11 +32,13 @@ const Login = () => {
   const onSubmit = async (data: IDataLogin) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
+        "https://be-travel-tc-x28-1end.vercel.app/api/auth/login",
         data,
       );
       message.success("Login successful");
-      localStorage.setItem("token", response.data.token);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
+      window.localStorage.setItem('user', JSON.stringify(response.data));
+      window.localStorage.setItem('authenticated', 'true');
       navigate("/home");
     } catch (err) {
       console.error(err);
@@ -50,7 +52,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-80 p-5 shadow-2xl">
+    <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-60 p-5 shadow-2xl">
       <h1 className="text-4xl font-semibold">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
         <div>
@@ -66,8 +68,8 @@ const Login = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your email"
-                className="w-full"
-              />
+                className="w-full hover:border-red-300 focus:border-red-300"
+                />
             )}
           />
           {errors.email && (
@@ -86,8 +88,8 @@ const Login = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your password"
-                className="w-full"
-              />
+                className="w-full hover:border-red-300 [&_.ant-input-affix-wrapper-focused]:!border-red-500"
+                />
             )}
           />
           {errors.password && (
@@ -97,7 +99,7 @@ const Login = () => {
         <div className="flex flex-col items-center gap-2">
           <Button
             htmlType="submit"
-            className="w-full"
+            className="w-full bg-red-500 hover:!bg-red-600"
             type="primary"
             size="large"
           >
@@ -107,7 +109,7 @@ const Login = () => {
             Don't have an account?{" "}
             <span
               onClick={() => navigate("/auth/register")}
-              className="cursor-pointer font-semibold"
+              className="cursor-pointer font-semibold hover:text-red-500"
             >
               Register
             </span>

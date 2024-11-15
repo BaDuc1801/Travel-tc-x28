@@ -8,11 +8,32 @@
     margin: 0;
     padding: 0;
   }
+  body{
+    background-color: #F2F4F7;
+  }
 }
 
-:where(.css-dev-only-do-not-override-ni1kz0).ant-tabs-top>.ant-tabs-nav,
-:where(.css-dev-only-do-not-override-ni1kz0).ant-tabs-bottom>.ant-tabs-nav,
-:where(.css-dev-only-do-not-override-ni1kz0).ant-tabs-top>div>.ant-tabs-nav,
-:where(.css-dev-only-do-not-override-ni1kz0).ant-tabs-bottom>div>.ant-tabs-nav {
-  margin: 0px 0px 2px 0px
+/* Thêm vào file CSS global của bạn */
+.ant-input-affix-wrapper-focused,
+.ant-input-affix-wrapper:focus {
+  border-color: #fca5a5 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1) !important;
+}
+
+.ant-input-affix-wrapper:hover {
+  border-color: #fca5a5 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 50%; 
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 10px !important;
+    color: red !important;
+    font-weight: 600 !important;
 }
