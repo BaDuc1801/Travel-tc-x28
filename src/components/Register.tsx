@@ -183,11 +183,11 @@ const Register: React.FC = () => {
       </form>
       <style>
         {`
-          .password-requirements {
+            .password-requirements {
             color: red;
             margin-top: 0.25rem;
             word-break: break-word;
-            max-width: 100%; 
+            max-width: 500px;
             line-height: 1.25rem;
             font-size: 14px;
         `}
