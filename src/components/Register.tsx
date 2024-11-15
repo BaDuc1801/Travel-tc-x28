@@ -18,7 +18,7 @@ const schema = yup.object().shape({
     .test(
       "password-special-char",
       "Password must contain at least 1 special character",
-      (value) => !!value && /[@#$%&*!]/.test(value)
+      (value) => !!value && /[@#$%&*!]/.test(value),
     ),
   confirmPassword: yup
     .string()
@@ -64,7 +64,10 @@ const Register: React.FC = () => {
 
   const onSubmit = async (data: IDataRegister) => {
     try {
-      await axios.post("https://be-travel-tc-x28-1end.vercel.app/api/auth/register", data);
+      await axios.post(
+        "https://be-travel-tc-x28-1end.vercel.app/user/auth/register",
+        data,
+      );
       message.success("Registration successful");
       navigate("/auth/login");
     } catch (err) {
@@ -81,7 +84,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center rounded-xl bg-white bg-opacity-60 p-5 py-10 shadow-2xl">
-      <h1 className="text-4xl font-semibold mb-2">Register</h1>
+      <h1 className="mb-2 text-4xl font-semibold">Register</h1>
       <form
         onSubmit={handleSubmit(onSubmit, showErrorMessages)}
         className="flex flex-col gap-7"
@@ -139,13 +142,13 @@ const Register: React.FC = () => {
           />
           {passwordValue && !/[@#$%&*!]/.test(passwordValue) && (
             <p className="password-requirements">
-              Password must contain at least 1 special character 
+              Password must contain at least 1 special character
             </p>
           )}
         </div>
         <div>
           <label className="font-semibold" htmlFor="confirmPassword">
-            Confirm Password<span className="text-red-500 ">*</span>:
+            Confirm Password<span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -170,7 +173,7 @@ const Register: React.FC = () => {
           </Button>
           <Button
             htmlType="submit"
-            className="!px-6 !bg-red-500 hover:!bg-red-600"
+            className="!bg-red-500 !px-6 hover:!bg-red-600"
             type="primary"
             size="large"
           >
@@ -180,14 +183,13 @@ const Register: React.FC = () => {
       </form>
       <style>
         {`
-          .password-requirements {
+            .password-requirements {
             color: red;
             margin-top: 0.25rem;
             word-break: break-word;
             max-width: 500px;
             line-height: 1.25rem;
-            font-size: 16px;
-          }
+            font-size: 14px;
         `}
       </style>
     </div>
