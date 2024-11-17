@@ -2,19 +2,14 @@ import React, { useEffect, useState } from 'react';
 import PostList from './posts&comments/ListPosts.tsx';
 import DestinationCard from './DestinationCard.tsx';
 import axios from 'axios';
-import { SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation } from 'swiper/modules';
-// ... existing imports ...
-import { Swiper } from 'swiper/react'; // Sửa import này
-import 'swiper/css'; // Thêm CSS cơ bản
-import 'swiper/css/free-mode'; // Thêm CSS cho free-mode
-import 'swiper/css/navigation';
+import { BsStars } from 'react-icons/bs';
 
 interface DestinationCardType {
-    city: string;
-    destiName: string;
+    cityName: string;
+    coordinates: number[];
     description: string;
     img: string;
+    destinations: string[]
 }
 
 const Home: React.FC = () => {
@@ -22,7 +17,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const data = await axios.get("https://be-travel-tc-x28-1end.vercel.app/destinations");
+            const data = await axios.get("https://be-travel-tc-x28-1end.vercel.app/cities");
             setDesti(data.data);
         };
         fetchData();
@@ -31,34 +26,21 @@ const Home: React.FC = () => {
     return (
         <div>
             <div className="m-auto w-[45%] mt-8 bg-white p-4">
-                <Swiper
-                    slidesPerView={4.5}
-                    spaceBetween={5}
-                    freeMode={true}
-                    navigation={true} 
-                    modules={[FreeMode, Navigation]}
-                >
+                <div className='flex items-center gap-2 pl-2 mb-2 text-9 font-semibold'>
+                    <p>Khám phá những địa điểm nổi bật </p>
+                    <BsStars className='text-yellow-400' />
+                </div>
+                <div className="scroll-container flex overflow-x-auto whitespace-nowrap gap-2 p-4 snap-x snap-mandatory">
                     {desti.map((destination, index) => (
-                        <SwiperSlide key={index}>
+                        <div key={index} className="snap-start">
                             <DestinationCard
-                                city={destination.city}
-                                name={destination.destiName}
-                                description={destination.description}
-                                image={destination.img}
+                                cityName={destination.cityName}
+                                img={destination.img}
                             />
-                        </SwiperSlide>
+                        </div>
+                        
                     ))}
-                    {desti.map((destination, index) => (
-                        <SwiperSlide key={index}>
-                            <DestinationCard
-                                city={destination.city}
-                                name={destination.destiName}
-                                description={destination.description}
-                                image={destination.img}
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                </div>
             </div>
             <PostList />
         </div>
