@@ -37,3 +37,13 @@
     color: red !important;
     font-weight: 600 !important;
 }
+
+/* Ẩn thanh cuộn ngang cho trình duyệt hỗ trợ */
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Ẩn thanh cuộn ngang trên Chrome, Safari */
+}
+
+.scroll-container {
+  -ms-overflow-style: none;  /* Ẩn thanh cuộn trên IE và Edge */
+  scrollbar-width: none;     /* Ẩn thanh cuộn trên Firefox */
+}
