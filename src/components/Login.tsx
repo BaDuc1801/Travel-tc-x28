@@ -1,3 +1,4 @@
+
 import { Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -39,7 +40,7 @@ const Login = () => {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
       window.localStorage.setItem('user', JSON.stringify(response.data));
       window.localStorage.setItem('authenticated', 'true');
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       console.error(err);
       if (axios.isAxiosError(err)) {

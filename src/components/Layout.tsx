@@ -14,7 +14,7 @@ const Layout: React.FC = () => {
     const user: any = JSON.parse(localStorage.getItem('user') || '{}');
 
     return (
-        <div className="h-screen">
+        <div className="h-screen flex flex-col">
             <div className="fixed z-50 top-0 flex justify-between w-full bg-[#090c28] text-white pl-2 pr-2 pt-2 pb-2">
                 <div className="flex items-center w-1/3">
                     <GiFlexibleStar className="text-3xl" />
@@ -47,7 +47,7 @@ const Layout: React.FC = () => {
                     </div>
                 }
             </div>
-            <div className='mt-[56px]'>
+            <div className='flex-grow mt-[56px]'>
                 <Outlet />
             </div>
         </div>

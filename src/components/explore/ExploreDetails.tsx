@@ -46,7 +46,7 @@ const ExploreDetails: React.FC = () => {
     const mapCenter = city?.coordinates || defaultCenter;
 
     return (
-        <div className='flex h-[calc(100vh-56px) scroll-container'>
+        <div className='flex h-[calc(100vh-56px)]'>
             <div className='w-1/3 overflow-y-auto'>
                 <div className='relative h-[50%]'>
                     <img src={city?.img} alt="city image" className='h-full object-cover' />
@@ -83,7 +83,7 @@ const ExploreDetails: React.FC = () => {
                     }
                 </div>
             </div>
-            <div className='flex-grow h-[calc(100vh-56px)] sticky top-[56px]'>
+            <div className='flex-grow'>
                     <MapContainer
                         center={mapCenter}
                         zoom={13}
