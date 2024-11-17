@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Input, message } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -11,22 +12,37 @@ const schema = yup.object().shape({
     .string()
     .email("Invalid email format")
     .required("Email is required"),
-  password: yup.string().required("Password is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .test(
+      "password-special-char",
+      "Password must contain at least 1 special character",
+      (value) => !!value && /[@#$%&*!]/.test(value),
+    ),
   confirmPassword: yup
     .string()
     .required("Confirm Password is required")
     .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
-const Register = () => {
+interface IDataRegister {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
     reset,
-  } = useForm({
+  } = useForm<IDataRegister>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
@@ -36,9 +52,22 @@ const Register = () => {
     },
   });
 
+  const passwordValue = watch("password");
+
+  const showErrorMessages = () => {
+    Object.values(errors).forEach((error) => {
+      if (error?.message) {
+        message.error(error.message);
+      }
+    });
+  };
+
   const onSubmit = async (data: IDataRegister) => {
     try {
-      await axios.post("https://be-travel-tc-x28-1end.vercel.app/api/auth/register", data);
+      await axios.post(
+        "https://be-travel-tc-x28-1end.vercel.app/user/auth/register",
+        data,
+      );
       message.success("Registration successful");
       navigate("/auth/login");
     } catch (err) {
@@ -52,10 +81,14 @@ const Register = () => {
       reset();
     }
   };
+
   return (
     <div className="flex flex-col items-center rounded-xl bg-white bg-opacity-60 p-5 py-10 shadow-2xl">
-      <h1 className="text-4xl font-semibold mb-2">Register</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
+      <h1 className="mb-2 text-4xl font-semibold">Register</h1>
+      <form
+        onSubmit={handleSubmit(onSubmit, showErrorMessages)}
+        className="flex flex-col gap-7"
+      >
         <div>
           <label className="mb-2 font-semibold" htmlFor="name">
             Name<span className="mb-2 text-red-500">*</span>:
@@ -72,9 +105,6 @@ const Register = () => {
               />
             )}
           />
-          {errors.name && (
-            <p className="text-xs text-red-500">{errors.name.message}</p>
-          )}
         </div>
         <div>
           <label className="font-semibold" htmlFor="email">
@@ -93,9 +123,6 @@ const Register = () => {
               />
             )}
           />
-          {errors.email && (
-            <p className="text-xs text-red-500">{errors.email.message}</p>
-          )}
         </div>
         <div>
           <label className="font-semibold" htmlFor="password">
@@ -113,8 +140,10 @@ const Register = () => {
               />
             )}
           />
-          {errors.password && (
-            <p className="text-xs text-red-500">{errors.password.message}</p>
+          {passwordValue && !/[@#$%&*!]/.test(passwordValue) && (
+            <p className="password-requirements">
+              Password must contain at least 1 special character
+            </p>
           )}
         </div>
         <div>
@@ -133,23 +162,18 @@ const Register = () => {
               />
             )}
           />
-          {errors.confirmPassword && (
-            <p className="text-xs text-red-500">
-              {errors.confirmPassword.message}
-            </p>
-          )}
         </div>
         <div className="flex justify-around">
           <Button
             onClick={() => navigate("/auth/login")}
             className="px-8 hover:!border-red-300 hover:!text-red-500"
             size="large"
-          >       
+          >
             Back
           </Button>
           <Button
-            htmlType="submit" 
-            className="!px-6 !bg-red-500 hover:!bg-red-600"
+            htmlType="submit"
+            className="!bg-red-500 !px-6 hover:!bg-red-600"
             type="primary"
             size="large"
           >
@@ -157,6 +181,17 @@ const Register = () => {
           </Button>
         </div>
       </form>
+      <style>
+        {`
+            .password-requirements {
+            color: red;
+            margin-top: 0.25rem;
+            word-break: break-word;
+            max-width: 500px;
+            line-height: 1.25rem;
+            font-size: 14px;
+        `}
+      </style>
     </div>
   );
 };
