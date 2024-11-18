@@ -1,8 +1,23 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+
+interface CityType {
+    cityName: string;
+    coordinates: [number, number];
+    description: string;
+    img: string;
+    destinations: {
+        destiName: string;
+        description: string;
+        img: string;
+        city: string;
+        coordinates: [number, number];
+    }[]
+}
 
 const VietnamMap = (() => {
     const [search, setSearch] = useState<string>('');
@@ -18,6 +33,30 @@ const VietnamMap = (() => {
     const handleCityClick = (cityName: string) => {
         navigate(`/explore/${cityName}`);
     };
+
+    const [listCity, setListCity] = useState<CityType[]>([]);
+    const beUrl = import.meta.env.VITE_APP_BE_URL;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const list = await axios.get(`${beUrl}/cities`);
+                setListCity(list.data);
+            } catch (error) {
+                console.error("Failed to fetch city data", error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const handleSearchClick = () => {
+        const isValidCity = listCity.find(city => simplifyText(city.cityName) === simplifyText(search));
+        if (isValidCity) {
+            navigate(`/explore/${isValidCity.cityName}`);
+        } else {
+            alert("City not found. Please enter a valid city name.");
+        }
+    };    
 
     const simplifyText = (str: string): string => {
         return str.toLowerCase()
@@ -47,7 +86,7 @@ const VietnamMap = (() => {
     `;
 
     return (
-        <div className='bg-transparent flex h-[calc(100vh-60px)]'>
+        <div className='bg-transparent flex h-[calc(100vh-56px)]'>
             <div className='flex items-center justify-end w-1/2'>
                 <div className='flex-col justify-center flex'>
                     <p className='text-5xl text-white font-bold mb-5'>Explore of Vietnam</p>
@@ -58,7 +97,9 @@ const VietnamMap = (() => {
                             onChange={handleSearch}
                             placeholder="Search..."
                         />
-                        <span className='text-white bg-red-500 pt-4 pb-4 pl-5 pr-6 text-xl cursor-pointer rounded-r-3xl'><FaSearch /></span>
+                        <span className='text-white bg-red-500 pt-4 pb-4 pl-5 pr-6 text-xl cursor-pointer rounded-r-3xl'>
+                            <FaSearch onClick={handleSearchClick}/>
+                        </span>
                     </div>
                 </div>
             </div>

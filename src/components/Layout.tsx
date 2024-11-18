@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GiFlexibleStar } from 'react-icons/gi';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const Layout: React.FC = () => {
     const [active, setActive] = useState("Home")
@@ -12,6 +12,19 @@ const Layout: React.FC = () => {
 
     const isAuthenticated = window.localStorage.getItem('authenticated') === 'true';
     const user: any = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const location = useLocation();
+     
+    useEffect(() => {
+        const path = location.pathname;
+        if (path === '/') {
+            setActive("Home");
+        } else if (path.startsWith('/explore')) {
+            setActive("Explore");
+        } else if (path.startsWith('/destinations')) {
+            setActive("Destinations");
+        }
+    }, [location.pathname]);    
 
     return (
         <div className="h-screen flex flex-col">

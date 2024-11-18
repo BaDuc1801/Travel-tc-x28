@@ -55,6 +55,7 @@ const ExploreDetails: React.FC = () => {
                 const list = await axios.get(`${beUrl}/cities`);
                 setCity(selected.data);
                 setListCity(list.data);
+                setCoor(selected.data.coordinates);
             } catch (error) {
                 console.error("Failed to fetch city data", error);
             }
@@ -62,11 +63,15 @@ const ExploreDetails: React.FC = () => {
         fetchData();
     }, [cityName]);
 
-    const mapCenter = coor;
-
     const handleSearchClick = (value: string) => {
+        const selectedCity = listCity.find(city => city.cityName === value);
+        if (selectedCity) {
+            setCoor(selectedCity.coordinates); 
+        }
         navigate(`/explore/${value}`);
-    }
+        setIsDetailVisible(false);
+    };
+
 
     const handleCloseDetail = () => {
         setIsDetailVisible(false);
@@ -137,7 +142,7 @@ const ExploreDetails: React.FC = () => {
             {isDetailVisible && (
                 <div className='w-1/4 overflow-y-auto bg-white p-4'>
                     <button
-                        onClick={handleCloseDetail} 
+                        onClick={handleCloseDetail}
                         className=''
                     >
                         Xsdasdasd
@@ -155,7 +160,7 @@ const ExploreDetails: React.FC = () => {
             {/* Phần bên trái: Bản đồ */}
             <div className='flex-grow'>
                 <MapContainer
-                    center={mapCenter}
+                    center={coor}
                     zoom={13}
                     minZoom={13}
                     scrollWheelZoom={false}
@@ -165,9 +170,9 @@ const ExploreDetails: React.FC = () => {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <SetMapCenter center={mapCenter} />
+                    <SetMapCenter center={coor} />
                     {city && (
-                        <Marker position={mapCenter}>
+                        <Marker position={coor}>
                             <Popup>
                                 {city.cityName}<br /> {city.description}
                             </Popup>
