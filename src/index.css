@@ -37,3 +37,20 @@
     color: red !important;
     font-weight: 600 !important;
 }
+
+/* Ẩn thanh cuộn ngang cho trình duyệt hỗ trợ */
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Ẩn thanh cuộn ngang trên Chrome, Safari */
+}
+
+.scroll-container {
+  -ms-overflow-style: none;  /* Ẩn thanh cuộn trên IE và Edge */
+  scrollbar-width: none;     /* Ẩn thanh cuộn trên Firefox */
+}
+
+:where(.css-dev-only-do-not-override-ni1kz0).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
+  background-color: rgba(0, 0, 0, 0.3); /* Màu nền */
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}

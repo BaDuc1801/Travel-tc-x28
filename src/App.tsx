@@ -14,7 +14,6 @@ const App = () => {
       {/* Route cho layout */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} /> 
-        <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} /> 
         <Route path="/explore/:cityName" element={<ExploreDetails />} /> 
         <Route path="/profile" element={<UserProfile userId="6730c1c3226583eaf4743383"/>}/>
@@ -28,7 +27,6 @@ const App = () => {
 
       {/* Route không tìm thấy */}
 
-      {/* Route không tìm thấy */}
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
