@@ -6,6 +6,7 @@ import Home from "./components/Home.tsx";
 import Layout from "./components/Layout.tsx";
 import Explore from "./components/explore/Explore.tsx";
 import ExploreDetails from "./components/explore/ExploreDetails.tsx";
+import UserProfile from "./components/profile/UserProfile.tsx";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route index element={<Home />} /> 
         <Route path="/explore" element={<Explore />} /> 
         <Route path="/explore/:cityName" element={<ExploreDetails />} /> 
+        <Route path="/profile" element={<UserProfile userId="6730c1c3226583eaf4743383"/>}/>
       </Route>
 
       {/* Route cho auth */}
