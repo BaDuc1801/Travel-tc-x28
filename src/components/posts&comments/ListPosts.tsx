@@ -4,7 +4,7 @@ import { samplePosts } from '../list';
 
 const PostList: React.FC = () => {
   return (
-    <div className='flex flex-col w-[45%] m-auto gap-5'>
+    <div className='flex flex-col m-auto gap-5'>
       {samplePosts.map((post, index) => (
         <PostCard
           key={index}

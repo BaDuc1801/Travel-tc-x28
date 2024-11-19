@@ -25,7 +25,7 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            <div className="m-auto w-[45%] mt-8 bg-white p-4">
+            <div className="m-auto mt-8 bg-white p-4">
                 <div className='flex items-center gap-2 pl-2 mb-2 text-9 font-semibold'>
                     <p>Khám phá những địa điểm nổi bật </p>
                     <BsStars className='text-yellow-400' />

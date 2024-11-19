@@ -7,6 +7,8 @@ import 'leaflet/dist/leaflet.css';
 import { GrLocation } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { Select } from 'antd';
+import PostList from '../posts&comments/ListPosts';
+import { IoMdReturnLeft } from 'react-icons/io';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
 
@@ -66,7 +68,7 @@ const ExploreDetails: React.FC = () => {
     const handleSearchClick = (value: string) => {
         const selectedCity = listCity.find(city => city.cityName === value);
         if (selectedCity) {
-            setCoor(selectedCity.coordinates); 
+            setCoor(selectedCity.coordinates);
         }
         navigate(`/explore/${value}`);
         setIsDetailVisible(false);
@@ -143,18 +145,16 @@ const ExploreDetails: React.FC = () => {
                 <div className='w-1/4 overflow-y-auto bg-white p-4'>
                     <button
                         onClick={handleCloseDetail}
-                        className=''
+                        className='text-3xl text-red-500'
                     >
-                        Xsdasdasd
+                        <IoMdReturnLeft />
                     </button>
-                    {selectedDestination ? (
-                        <>
-                            <h2 className='text-xl font-bold'>{selectedDestination.destiName}</h2>
-                            <p>{selectedDestination.description}</p>
-                        </>
-                    ) : (
-                        <p>Chọn một địa điểm để xem chi tiết.</p>
-                    )}
+                    <div>
+                        <h2 className='text-xl font-bold my-4'>{selectedDestination?.destiName}</h2>
+                        <p>{selectedDestination?.description}</p>
+                    </div>
+                    <p className='text-xl font-bold my-4'>Một số bài viết liên quan</p>
+                    <PostList/>
                 </div>
             )}
             {/* Phần bên trái: Bản đồ */}
