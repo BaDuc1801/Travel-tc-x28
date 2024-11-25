@@ -7,6 +7,7 @@ import { FaHandHoldingHeart } from 'react-icons/fa6';
 import { BiSolidCommentDetail } from 'react-icons/bi';
 import { RiUserFollowFill } from 'react-icons/ri';
 import { Menu, MenuProps } from 'antd';
+import ListFollower from './ListFollower.tsx';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
 
@@ -64,34 +65,6 @@ const items: MenuItem[] = [
     key: 'sub4',
     label: 'Thư viện',
   },
-  {
-    key: 'sub2',
-    label: 'Bài viết',
-    // icon: <AppstoreOutlined />,
-  },
-  {
-    key: 'sub3',
-    label: 'Người theo dõi',
-    // icon: <SettingOutlined />,
-  },
-  {
-    key: 'sub4',
-    label: 'Thư viện',
-  },
-  {
-    key: 'sub2',
-    label: 'Bài viết',
-    // icon: <AppstoreOutlined />,
-  },
-  {
-    key: 'sub3',
-    label: 'Người theo dõi',
-    // icon: <SettingOutlined />,
-  },
-  {
-    key: 'sub4',
-    label: 'Thư viện',
-  },
 ];
 
 const Home: React.FC = () => {
@@ -115,7 +88,7 @@ const Home: React.FC = () => {
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
             {/* Phần bên trái */}
-            <div className="w-1/4 sticky top-[88px] h-screen rounded-lg overflow-hidden">
+            <div className="w-1/4 sticky top-[88px] h-full rounded-lg overflow-hidden">
                 <div className='bg-gradient-to-b from-red-300 to-red-100 pt-8'>
                     <img className='rounded-full w-28 m-auto' src={userData?.profilePic.profilePicture} alt="avatar" />
                     <p className='text-center mt-4 text-xl font-semibold pb-2'>{userData?.name}</p>
@@ -160,11 +133,9 @@ const Home: React.FC = () => {
             </div>
 
             {/* Phần bên phải */}
-            <div className="w-1/4 bg-red-100 sticky top-[88px] h-full">
-                <div>
-                    <img className='rounded-full w-28 m-auto mt-8' src={userData?.profilePic.profilePicture} alt="avatar" />
-                    <p className='text-center mt-4 text-xl font-semibold'>{userData?.name}</p>
-                </div>
+            <div className="w-1/4 bg-white sticky top-[88px] h-[512px] rounded-lg p-4">
+                <p className='font-semibold'>Danh sách người đang theo dõi</p>
+                <ListFollower/>
             </div>
         </div>
     );
