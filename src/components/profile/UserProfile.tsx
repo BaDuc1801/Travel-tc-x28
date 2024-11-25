@@ -61,11 +61,11 @@ useEffect(() => {
         case "Posts":
             return <div className="h-screen">No post yet.</div>
         case "Followers":
-            return <div>No follower yet.</div>
+            return <div className="h-screen">No follower yet.</div>
         case "Library":
-            return <div>No picture yet.</div>
+            return <div className="h-screen">No picture yet.</div>
         case "Details":
-            return <UserDetails userData={userData}/>
+            return <div className="h-screen"><UserDetails userData={userData}/></div>
         default:
             return <div></div>
     }

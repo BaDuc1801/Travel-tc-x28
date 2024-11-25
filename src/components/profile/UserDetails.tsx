@@ -32,7 +32,7 @@ const UserDetails:React.FC<{userData: any}> = ({userData}) => {
           <p>Birth country: </p>
           <p>Nationality </p>
           <p>Education </p>
-          <p>Email: </p>
+          <p>Email: {userData.data.email} </p>
           <Button>Change password </Button>
         </div>;
     }

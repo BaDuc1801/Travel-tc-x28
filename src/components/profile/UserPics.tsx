@@ -20,13 +20,13 @@ const UserPics: React.FC<{userData: any}> = ({userData}) => {
       <div className="w-full rounded-lg bg-white shadow-lg">
         <img
           className="h-[200px] w-full bg-cover bg-center"
-          src={userData ? userData.profilePic : "https://picsum.photos/400" }
+          src={userData ? userData.data.profilePic.profilePicture : "https://picsum.photos/1000" }
           alt=""
         />
       </div>
       <div className="-mt-60 flex flex-col items-center justify-center">
         <img
-          src={"https://picsum.photos/1000"}
+          src={userData ? userData.data.profilePic.profilePicture : "https://picsum.photos/400"}
           alt="Profile picture"
           className="h-60 w-60 rounded-full border-4 border-white object-cover"
           onClick={showModal}
@@ -45,7 +45,7 @@ const UserPics: React.FC<{userData: any}> = ({userData}) => {
           <p>Some contents...</p>
           <p>Some contents...</p>
         </Modal>
-        <div className="p-2 text-4xl font-bold">{userData ? userData.name : "David Lorem"}</div>
+        <div className="p-2 text-4xl font-bold">{userData.data.name ? userData.data.name : "David Lorem"}</div>
       </div>
     </div>
   );
