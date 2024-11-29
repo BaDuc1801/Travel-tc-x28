@@ -7,16 +7,18 @@ import Layout from "./components/Layout.tsx";
 import Explore from "./components/explore/Explore.tsx";
 import ExploreDetails from "./components/explore/ExploreDetails.tsx";
 import UserProfile from "./components/profile/UserProfile.tsx";
+import PostCreator from "./components/postcreat/PostCreator.tsx"; // Import PostCreator
 
 const App = () => {
   return (
     <Routes>
       {/* Route cho layout */}
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} /> 
-        <Route path="/explore" element={<Explore />} /> 
-        <Route path="/explore/:cityName" element={<ExploreDetails />} /> 
-        <Route path="/profile" element={<UserProfile userId={JSON.parse(localStorage.getItem('user') || '{}').id}/>}/>
+        <Route index element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/explore/:cityName" element={<ExploreDetails />} />
+        <Route path="/profile" element={<UserProfile userId={JSON.parse(localStorage.getItem('user') || '{}').id} />} />
+        <Route path="/create-post" element={<PostCreator />} /> 
       </Route>
 
       {/* Route cho auth */}
@@ -26,7 +28,6 @@ const App = () => {
       </Route>
 
       {/* Route không tìm thấy */}
-
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
