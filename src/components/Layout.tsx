@@ -28,7 +28,7 @@ const Layout: React.FC = () => {
 
     return (
         <div className="h-screen flex flex-col">
-            <div className="fixed z-50 top-0 flex justify-between w-full bg-[#090c28] text-white pl-2 pr-2 pt-2 pb-2">
+            <div className="fixed z-50 top-0 flex justify-between w-full bg-[#090c28] text-white pl-2 pr-2 h-[56px]">
                 <div className="flex items-center w-1/3">
                     <GiFlexibleStar className="text-3xl" />
                     {/* sau để thành Link back về home */}
