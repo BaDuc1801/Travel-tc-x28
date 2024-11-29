@@ -1,10 +1,15 @@
-import React from "react";
+import { Button } from "antd";
+import React, { useContext } from "react";
+
+import { LiaEditSolid } from "react-icons/lia";
+import EditDetailsContext from "../../context/EditDetailsContext.ts";
 interface UserNavbarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
 }
 
 const UserNavbar: React.FC<UserNavbarProps> = ({ activeTab, setActiveTab }) => {
+  const {editStatus,setEditStatus} = useContext(EditDetailsContext);
   // Sections data
   const tabs = [
     { id: "Posts", label: "Posts" },
@@ -14,7 +19,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({ activeTab, setActiveTab }) => {
   ];
     
   return (
-    <div className="rounded-lg shadow-lg">
+    <div className="flex justify-between rounded-lg shadow-lg">
       <ul className="flex space-x-4">
         {tabs.map((tab) => (
           <li key={tab.id}>
@@ -31,6 +36,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({ activeTab, setActiveTab }) => {
           </li>
         ))}
       </ul>
+      <Button onClick={() => setEditStatus(!editStatus)} className="px-4 py-2 text-xl text-gray-800"><LiaEditSolid />Update details</Button>
     </div>
   );
 };

@@ -51,7 +51,7 @@ const Layout: React.FC = () => {
                             {showMenu && (
                                 <>
                                     <div className="absolute top-[40px] right-0 z-10 rounded-md overflow-hidden bg-white">
-                                        <Link to={`/user/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</Link>
+                                        <Link to={`/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</Link>
                                         <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false") }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
                                     </div>
                                 </>

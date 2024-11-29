@@ -16,7 +16,7 @@ const App = () => {
         <Route index element={<Home />} /> 
         <Route path="/explore" element={<Explore />} /> 
         <Route path="/explore/:cityName" element={<ExploreDetails />} /> 
-        <Route path="/profile" element={<UserProfile userId={JSON.parse(localStorage.getItem('user') || '{}').id}/>}/>
+        <Route path="/profile/:id" element={<UserProfile/>}/>
       </Route>
 
       {/* Route cho auth */}

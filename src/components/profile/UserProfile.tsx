@@ -1,4 +1,4 @@
-// TODO: 
+// TODO:
 // gán biến user với biến trong localstorage và dùng useEffect để re-render mỗi khi biến user thay đổi.
 // SELECT in db to fetch specific data from server, nodemailer to send email from system
 // https://be-travel-tc-x28-1end.vercel.app/user
@@ -6,87 +6,90 @@ import React, { useEffect, useState } from "react";
 import UserDetails from "./UserDetails.tsx";
 import UserPics from "./UserPics.tsx";
 import UserNavbar from "./UserNavbar.tsx";
-import {useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import  EditDetailsContext from "../../context/EditDetailsContext.ts";
 import axios from "axios";
 
-// interface User {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   profilePic: object;
-
-// }
-
-const UserProfile:React.FC<{userId: string}> = ({userId}) => {
+const UserProfile: React.FC = () => {
   // tab persistence
   const [searchParams, setSearchParams] = useSearchParams();
-  const initTab = searchParams.get('tab') || "Posts"
+  const initTab = searchParams.get("tab") || "Posts";
   const [activeTab, setActiveTab] = useState(initTab);
+  const { id } = useParams();
+  const userId = (id || "").toString();
+  const [editStatus, setEditStatus] = useState<boolean>(false);
 
-  useEffect(()=> {
-    setSearchParams({tab:activeTab});
+  useEffect(() => {
+    setSearchParams({ tab: activeTab });
   }, [activeTab]);
 
   // fetch user data based on user id
-const fetchUserData = async (userId: string) => {
-  try {
-    const response = await axios.get(`http://localhost:8080/user/${userId}`)
-    console.log(response);
-    
-    return response;
-  } catch (e) {
-    console.log('fetchUserData error: ', e);
-    
-  }
-};
+  const fetchUserData = async (userId: string | undefined) => {
+    try {
+      if (!userId) {
+        return;
+      }
+      const response = await axios.get(`http://localhost:8080/user/${userId}`);
+      console.log("fetchUserData: ", response);
 
-const [userData, setUser] = useState<any| null>(null);
+      return response.data;
+    } catch (e) {
+      console.log("fetchUserData error: ", e);
+    }
+  };
 
+  const [userData, setUserData] = useState<any | null>(null);
+  console.log("userData: ", userData);
 
-useEffect(() => {
+  useEffect(() => {
     const getUserData = async () => {
       try {
-        const userData = await fetchUserData(userId);
-        setUser(userData);
-
+        const user = await fetchUserData(id);
+        setUserData(user);
       } catch (e) {
         console.log(e);
       }
-    }
+    };
     getUserData();
-}, [userId]);
+  }, [userId]);
 
   const renderTabsContent = () => {
     switch (activeTab) {
-        case "Posts":
-            return <div className="h-screen">No post yet.</div>
-        case "Followers":
-            return <div className="h-screen">No follower yet.</div>
-        case "Library":
-            return <div className="h-screen">No picture yet.</div>
-        case "Details":
-            return <div className="h-screen"><UserDetails userData={userData}/></div>
-        default:
-            return <div></div>
+      case "Posts":
+        return <div className="h-screen">No post yet.</div>;
+      case "Followers":
+        return <div className="h-screen">No follower yet.</div>;
+      case "Library":
+        return <div className="h-screen">No picture yet.</div>;
+      case "Details":
+        return (
+          
+            <div className="h-screen">
+              <UserDetails userData={userData} />
+            </div>
+        );
+      default:
+        return <div></div>;
     }
-  }
+  };
   return (
-      <div className="bg-red-900">
-      
+    <EditDetailsContext.Provider value={{ editStatus, setEditStatus }}>
+    <div className="bg-red-900">
       <div className="mx-auto flex w-5/6 flex-col justify-center bg-white">
         <div>
           <UserPics userData={userData} />
         </div>
 
         <div>
-          <UserNavbar activeTab={activeTab} setActiveTab={setActiveTab}/> 
+          <EditDetailsContext.Provider value={{ editStatus, setEditStatus }}>
+            <UserNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
+          </EditDetailsContext.Provider>
         </div>
-        
-        <div>
-          {renderTabsContent()}
-        </div>
+
+        <div>{renderTabsContent()}</div>
       </div>
     </div>
+    </EditDetailsContext.Provider>
   );
 };
 
