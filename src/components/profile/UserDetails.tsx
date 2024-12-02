@@ -36,7 +36,7 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
     switch (activeSection) {
       default:
         return editStatus ? (
-          <Form form={form} className="text-xl">
+          <Form form={form} onFinish={onFinish} className="text-xl">
             <div>
               Pronouns:
               <Input
