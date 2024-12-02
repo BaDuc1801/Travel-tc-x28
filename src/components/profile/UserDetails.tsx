@@ -14,10 +14,10 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
     console.log(values)
   }
 
-  const renderArray = (array) => {
+  const renderArray = (array:Obj) => {
     if (!array || array.length == 0) return <span> None</span>;
     {
-      return array.map((item, index) => (
+      return array.map((item:string, index:number) => (
         <span key={index} className="ml-1">
           {item}
         </span>
