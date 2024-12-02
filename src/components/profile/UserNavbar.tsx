@@ -9,7 +9,7 @@ interface UserNavbarProps {
 }
 
 const UserNavbar: React.FC<UserNavbarProps> = ({ activeTab, setActiveTab }) => {
-  const {editStatus,setEditStatus} = useContext(EditDetailsContext);
+  const { editStatus, setEditStatus } = useContext(EditDetailsContext);
   // Sections data
   const tabs = [
     { id: "Posts", label: "Posts" },
@@ -17,7 +17,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({ activeTab, setActiveTab }) => {
     { id: "Library", label: "Library" },
     { id: "Details", label: "Details" },
   ];
-    
+
   return (
     <div className="flex justify-between rounded-lg shadow-lg">
       <ul className="flex space-x-4">
@@ -36,7 +36,13 @@ const UserNavbar: React.FC<UserNavbarProps> = ({ activeTab, setActiveTab }) => {
           </li>
         ))}
       </ul>
-      <Button onClick={() => setEditStatus(!editStatus)} className="px-4 py-2 text-xl text-gray-800"><LiaEditSolid />Update details</Button>
+      <Button
+        onClick={() => setEditStatus(!editStatus)}
+        className="px-4 py-2 text-xl text-gray-800"
+      >
+        <LiaEditSolid />
+        Update details
+      </Button>
     </div>
   );
 };

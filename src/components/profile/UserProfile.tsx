@@ -1,7 +1,8 @@
 // TODO:
-// gán biến user với biến trong localstorage và dùng useEffect để re-render mỗi khi biến user thay đổi.
-// SELECT in db to fetch specific data from server, nodemailer to send email from system
+// update userinfo from fe to server
+// nodemailer to send email from system
 // https://be-travel-tc-x28-1end.vercel.app/user
+
 import React, { useEffect, useState } from "react";
 import UserDetails from "./UserDetails.tsx";
 import UserPics from "./UserPics.tsx";
@@ -9,6 +10,7 @@ import UserNavbar from "./UserNavbar.tsx";
 import { useParams, useSearchParams } from "react-router-dom";
 import  EditDetailsContext from "../../context/EditDetailsContext.ts";
 import axios from "axios";
+import { Obj } from "../../interface/index.ts";
 
 const UserProfile: React.FC = () => {
   // tab persistence
@@ -38,7 +40,7 @@ const UserProfile: React.FC = () => {
     }
   };
 
-  const [userData, setUserData] = useState<any | null>(null);
+  const [userData, setUserData] = useState<Obj>({});
   console.log("userData: ", userData);
 
   useEffect(() => {
