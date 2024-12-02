@@ -20,7 +20,7 @@ const PostCreator: React.FC = () => {
 
   const fetchDestinations = useCallback(async () => {
     try {
-      const response = await axios.get('https://be-travel-tc-x28-1end.vercel.app/cities.cityName'); 
+      const response = await axios.get('https://be-travel-tc-x28-1end.vercel.app/cities'); 
       setDestinations(response.data);  
     } catch (error) {
       message.error('Không thể tải danh sách địa điểm');
@@ -233,8 +233,8 @@ const PostCreator: React.FC = () => {
           placeholder="Chọn địa điểm"
         >
           {destinations.map((dest: any) => (
-            <Select.Option key={dest._id} value={dest.destiName}>
-              {dest.destiName}
+            <Select.Option key={dest._id} value={dest.cityName}>
+              {dest.cityName}
             </Select.Option>
           ))}
         </Select>
