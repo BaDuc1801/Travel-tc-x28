@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Modal, Button, Input, Upload, message, Row, Col } from 'antd';
+import React, { useState, useCallback, useEffect } from 'react';  
+import { Modal, Button, Input, Upload, message, Row, Col, Select } from 'antd';  
 import { SmileOutlined, PictureOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import axios from 'axios';  
 import { Post } from './post.type';
@@ -7,13 +7,31 @@ import { Post } from './post.type';
 const { TextArea } = Input;
 
 const PostCreator: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Sử dụng open thay cho visible
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [text, setText] = useState<string>('');
   const [fileList, setFileList] = useState<any[]>([]);
   const [privacy, setPrivacy] = useState<Post['privacy']>('private');
   const [emotion, setEmotion] = useState<Post['emotion']>('happy');
   const [isMediaUploadVisible, setIsMediaUploadVisible] = useState(false);
   const [isEmotionSelectorVisible, setIsEmotionSelectorVisible] = useState(false);
+  const [location, setLocation] = useState<string>('');
+  const [destinations, setDestinations] = useState<any[]>([]);
+
+  const fetchDestinations = useCallback(async () => {
+    try {
+      const response = await axios.get('https://be-travel-tc-x28-1end.vercel.app/cities.cityName'); 
+      setDestinations(response.data);  
+    } catch (error) {
+      message.error('Không thể tải danh sách địa điểm');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      fetchDestinations();  
+    }
+  }, [isModalOpen, fetchDestinations]);
 
   const emotions = [
     { label: 'Vui vẻ', value: '😀 vui vẻ', icon: '😀' }, 
@@ -41,6 +59,7 @@ const PostCreator: React.FC = () => {
         avatar: 'https://api.soctrip.com/storage/files/web/1_00000000-0000-0000-0000-000000000000_defaultAvatar.webp',
       },
       emotion,
+      location,
       timestamp: new Date().toISOString(),
     };
 
@@ -55,12 +74,11 @@ const PostCreator: React.FC = () => {
       console.error(error);
     }
 
-    // Reset các trường sau khi đăng
     setText('');
     setFileList([]);
     setPrivacy('private');
     setEmotion('happy');
-    setIsModalOpen(false); // Thay visible bằng open
+    setIsModalOpen(false); 
     setIsMediaUploadVisible(false);
     setIsEmotionSelectorVisible(false);
   }, [text, fileList, privacy, emotion]);
@@ -145,10 +163,16 @@ const PostCreator: React.FC = () => {
           >
             Cảm xúc
           </Button>
-          <Button icon={<EnvironmentOutlined />} type="link">
+          <Button
+            icon={<EnvironmentOutlined />}
+            type="link"
+            onClick={() => setIsLocationModalOpen(true)} 
+          >
             Check-in
           </Button>
+
         </div>
+        
 
         {isMediaUploadVisible && (
           <Upload
@@ -194,6 +218,27 @@ const PostCreator: React.FC = () => {
             ))}
           </Row>
         )}
+
+      <Modal
+        title="Chọn địa điểm"
+        open={isLocationModalOpen}
+        onCancel={() => setIsLocationModalOpen(false)}
+        footer={null}
+        style={{ top: 50 }}
+      >
+        <Select
+          value={location}
+          onChange={setLocation}
+          style={{ width: '100%' }}
+          placeholder="Chọn địa điểm"
+        >
+          {destinations.map((dest: any) => (
+            <Select.Option key={dest._id} value={dest.destiName}>
+              {dest.destiName}
+            </Select.Option>
+          ))}
+        </Select>
+      </Modal>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button

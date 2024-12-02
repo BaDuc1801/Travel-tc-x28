@@ -6,5 +6,6 @@ export interface Post {
     author: { name: string; avatar: string };
     emotion?: string;
     timestamp: string;
+    location?: string;
   }
   
