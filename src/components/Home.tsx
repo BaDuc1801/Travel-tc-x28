@@ -8,6 +8,7 @@ import { BiSolidCommentDetail } from 'react-icons/bi';
 import { RiUserFollowFill } from 'react-icons/ri';
 import { Menu, MenuProps } from 'antd';
 import ListFollower from './ListFollower.tsx';
+import PostCreator from './postcreat/PostCreator.tsx';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
 
@@ -88,9 +89,9 @@ const Home: React.FC = () => {
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
             {/* Phần bên trái */}
-            <div className="w-1/4 sticky top-[88px] h-full rounded-lg overflow-hidden">
+            <div className="w-1/4 sticky top-[88px] rounded-lg overflow-hidden h-[calc(100vh-88px)] bg-white">
                 <div className='bg-gradient-to-b from-red-300 to-red-100 pt-8'>
-                    <img className='rounded-full w-28 m-auto' src={userData?.profilePic.profilePicture} alt="avatar" />
+                    <img className='rounded-full w-28 m-auto' src={userData?.profilePic?.profilePicture || "https://res.cloudinary.com/dzpw9bihb/image/upload/v1726676632/wgbdsrflw8b1vdalkqht.jpg"}/>
                     <p className='text-center mt-4 text-xl font-semibold pb-2'>{userData?.name}</p>
                 </div>
                 <div className='grid grid-cols-2 grid-rows-2 bg-white p-4'>
@@ -129,11 +130,12 @@ const Home: React.FC = () => {
                         ))}
                     </div>
                 </div>
+                <PostCreator/>
                 <PostList />
             </div>
 
             {/* Phần bên phải */}
-            <div className="w-1/4 bg-white sticky top-[88px] h-[512px] rounded-lg p-4">
+            <div className="w-1/4 bg-white sticky top-[88px] rounded-lg p-4 h-[calc(100vh-88px)]">
                 <p className='font-semibold'>Danh sách người đang theo dõi</p>
                 <ListFollower/>
             </div>

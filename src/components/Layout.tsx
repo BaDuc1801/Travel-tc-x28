@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { GiFlexibleStar } from 'react-icons/gi';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const Layout: React.FC = () => {
     const [active, setActive] = useState("Home")
     const [showMenu, setShowMenu] = useState<boolean>(false);
+    const nav = useNavigate();
 
     const toggleMenu = () => {
         setShowMenu((prevShowMenu) => !prevShowMenu);
@@ -29,9 +30,8 @@ const Layout: React.FC = () => {
     return (
         <div className="h-screen flex flex-col">
             <div className="fixed z-50 top-0 flex justify-between w-full bg-[#090c28] text-white pl-2 pr-2 h-[56px]">
-                <div className="flex items-center w-1/3">
+                <div className="flex items-center w-1/3 cursor-pointer" onClick={() => nav('/')}>
                     <GiFlexibleStar className="text-3xl" />
-                    {/* sau để thành Link back về home */}
                     <p className="text-2xl font-bold ml-2">Travel</p>
                 </div>
                 <div className="flex gap-10 items-center w-1/3 justify-center text-xl">
@@ -40,17 +40,17 @@ const Layout: React.FC = () => {
                     <a href="#" className={(active === "Destinations") ? "text-red-400" : "white"} onClick={() => { setActive("Destinations") }}>Destinations</a>
                 </div>
                 {!isAuthenticated ?
-                    <div className="flex gap-6 text-xl w-1/3 justify-end">
-                        <button className="hover:text-red-400 rounded-lg">Sign in</button>
-                        <button className="hover:bg-red-500 rounded-lg pl-4 pr-4 pt-2 pb-2 bg-red-400">Sign up</button>
+                    <div className="flex gap-6 text-lg w-1/3 justify-end items-center">
+                        <button className="hover:text-red-400 rounded-lg" onClick={() => nav('/auth/login')}>Sign in</button>
+                        <button className="hover:bg-red-500 rounded-lg px-2 h-10 bg-red-400" onClick={() => nav('/auth/register')}>Sign up</button>
                     </div> :
                     <div className="flex items-center gap-2 w-1/3 justify-end">
-                        <p>{user.name}</p>
+                        <p>{user?.name}</p>
                         <div className="h-10 w-10 relative group cursor-pointer " onClick={toggleMenu}>
-                            <img src={user.profilePic.profilePicture} className="rounded-full" />
+                            <img src={user?.profilePic?.profilePicture} className="rounded-full" />
                             {showMenu && (
                                 <>
-                                    <div className="absolute top-[40px] right-0 z-10 rounded-md overflow-hidden bg-white">
+                                    <div className="absolute top-[40px] right-0 z-50 rounded-md overflow-hidden bg-white">
                                         <Link to={`/user/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</Link>
                                         <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false") }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
                                     </div>
