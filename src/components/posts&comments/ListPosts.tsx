@@ -1,24 +1,26 @@
 import React from 'react';
-import PostCard from './PostCard';
-import { samplePosts } from '../list';
+import PostCard from './PostCard.tsx';
 
-const PostList: React.FC = () => {
+interface PostListProps {
+  listPost: any[];
+}
+const PostList: React.FC<PostListProps> = ({ listPost }) => {
+
   return (
-    <div className='flex flex-col m-auto gap-5'>
-      {samplePosts.map((post, index) => (
+    <div className="flex flex-col m-auto gap-5">
+      {listPost.map((post, index) => (
         <PostCard
           key={index}
-          username={post.username}
+          postId={post._id}
+          author={post.author}
           location={post.location}
-          timePosted={post.timePosted}
+          timestamp={post.timestamp}
+          emotion={post.emotion}
           content={post.content}
-          imageSrc={post.imageSrc}
-          comments={post.comments}
-        />
+          img={post.img} privacy={post.privacy} type={post.type} />
       ))}
     </div>
   );
 };
 
 export default PostList;
-
