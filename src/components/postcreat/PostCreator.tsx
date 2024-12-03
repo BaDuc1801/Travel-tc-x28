@@ -5,8 +5,10 @@ import axios from 'axios';
 import { Post } from './post.type';
 
 const { TextArea } = Input;
-
-const PostCreator: React.FC<{ onPostCreated: (newPost: Post) => void }> = ({ onPostCreated }) => {
+type PostListProps = {
+  onPostCreated: (newPost: Post) => void;
+};
+const PostCreator: React.FC<PostListProps> = ({ onPostCreated }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [text, setText] = useState<string>('');
