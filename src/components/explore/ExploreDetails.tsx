@@ -12,6 +12,22 @@ import { IoMdReturnLeft } from 'react-icons/io';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
 
+interface PostProps {
+    content: string;
+    privacy: 'private' | 'public';
+    type: 'text' | 'image';
+    author: {
+        _id: string;
+        name: string;
+        profilePic: {
+            profilePicture: string;
+        };
+    };
+    emotion?: string;
+    timestamp: string;
+    location?: string;
+    img?: string[];
+}
 interface CityType {
     cityName: string;
     coordinates: [number, number];
@@ -49,12 +65,15 @@ const ExploreDetails: React.FC = () => {
     const [coor, setCoor] = useState<[number, number]>([21.028182541862833, 105.83370094459077]);
     const [selectedDestination, setSelectedDestination] = useState<CityType['destinations'][0] | null>(null);
     const [isDetailVisible, setIsDetailVisible] = useState<boolean>(false);
+    const [listPost, setListPost] = useState<PostProps[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const selected = await axios.get(`${beUrl}/cities/infor/${cityName}`);
                 const list = await axios.get(`${beUrl}/cities`);
+                const response = await axios.get(`${beUrl}/post`);
+                setListPost(response.data);
                 setCity(selected.data);
                 setListCity(list.data);
                 setCoor(selected.data.coordinates);
@@ -154,7 +173,7 @@ const ExploreDetails: React.FC = () => {
                         <p>{selectedDestination?.description}</p>
                     </div>
                     <p className='text-xl font-bold my-4'>Một số bài viết liên quan</p>
-                    <PostList/>
+                    <PostList listPost={listPost}/>
                 </div>
             )}
             {/* Phần bên trái: Bản đồ */}
