@@ -63,23 +63,4 @@ const listcomment : CommentProps[] = [
     }
 ]
 
-const samplePosts: PostProps[] = [
-    {
-        username: 'User1',
-        location: 'Mindx School, Hà Nội',
-        timePosted: '11h after',
-        content: 'Hôm nay tôi đi chơi rất chán!',
-        imageSrc: testImg,
-        comments: listcomment, // Gắn danh sách bình luận vào
-    },
-    {
-        username: 'User2',
-        location: 'Café Sáng Tạo',
-        timePosted: '5h after',
-        content: 'Mọi thứ hôm nay thật tuyệt vời!',
-        imageSrc: testImg,
-        comments: [], // Không có bình luận
-    },
-];
-
-export {samplePosts, listcomment} ;
+export {listcomment} ;
