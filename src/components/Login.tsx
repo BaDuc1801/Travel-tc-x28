@@ -40,6 +40,9 @@ const Login = () => {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
       window.localStorage.setItem('user', JSON.stringify(response.data));
       window.localStorage.setItem('authenticated', 'true');
+      window.localStorage.setItem('likedPosts', JSON.stringify(response.data.likedPosts) || "[]");
+      window.localStorage.setItem('bookmarkedPosts', JSON.stringify(response.data.bookmarkedPosts) || "[]");
+      window.localStorage.setItem('likedComments', JSON.stringify(response.data.likedComments) || "[]");
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -52,6 +55,7 @@ const Login = () => {
       reset();
     }
   };
+  
   return (
     <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-60 p-5 shadow-2xl">
       <h1 className="text-4xl font-semibold">Login</h1>

@@ -9,6 +9,7 @@ import { RiUserFollowFill } from 'react-icons/ri';
 import { Menu, MenuProps } from 'antd';
 import ListFollower from './ListFollower.tsx';
 import PostCreator from './postcreat/PostCreator.tsx';
+import { CommentProps } from './posts&comments/CommentCard.tsx';
 // import ChatApp from './chat.tsx';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
@@ -22,28 +23,32 @@ interface DestinationCardType {
 }
 
 export interface IUser {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
+    _id: string;                        
+    name: string;                        
+    email: string;                       
+    password: string;                    
     profilePic: {
-        profilePicture: string;
-        bannerImage?: string;
+        profilePicture: string;          
+        bannerImage?: string;            
     };
-    followers: string[];
-    following: string[];
-    posts: string[];
+    followers: string[];                
+    following: string[];               
+    posts: string[];                     
     settings: {
-        privateAccount: boolean;
+        privateAccount: boolean;         
         notifications: {
-            email: boolean;
-            push: boolean;
-            sms: boolean;
+            email: boolean;             
+            push: boolean;          
+            sms: boolean;              
         };
     };
-    createdAt: string;
-    updatedAt: string;
+    likedPosts: string[];                
+    bookmarkedPosts: string[];           
+    likedComments: string[];          
+    createdAt: string;            
+    updatedAt: string;                   
 }
+
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -68,21 +73,42 @@ const items: MenuItem[] = [
         label: 'Thư viện',
     },
 ];
-interface PostProps {
-    content: string;
-    privacy: 'private' | 'public';
-    type: 'text' | 'image';
+
+interface Author {
+    _id: string;                   
+    name: string;                          
+    profilePic: {
+        profilePicture: string;           
+    };
+}
+
+interface Comment {
+    _id: string;
     author: {
         _id: string;
         name: string;
         profilePic: {
             profilePicture: string;
+            bannerImage?: string;
         };
     };
-    emotion?: string;
-    timestamp: string;
-    location?: string;
-    img?: string[];
+    content: string;
+    timestamp: Date; 
+    count: number;
+    replies: CommentProps[];
+}
+
+export interface PostProps {
+    _id: string;
+    content: string;                    
+    privacy: 'private' | 'public';       
+    type: 'text' | 'image';          
+    author: Author;                        
+    emotion?: string;                     
+    timestamp: string;            
+    location?: string;                    
+    img?: string[];                        
+    comments?: Comment[];                   
 }
 
 const Home: React.FC = () => {
@@ -104,10 +130,8 @@ const Home: React.FC = () => {
             }
         };
         fetchData();
-    }, [listPost]);
-    const handleNewPost = (newPost: any) => {
-        setListPost((prevPosts) => [newPost, ...prevPosts]); // Thêm bài viết mới vào đầu danh sách
-    };
+    }, []);
+
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
             {/* Phần bên trái */}
@@ -152,8 +176,8 @@ const Home: React.FC = () => {
                         ))}
                     </div>
                 </div>
-                <PostCreator onPostCreated={handleNewPost} />
-                <PostList listPost={listPost}/>
+                <PostCreator setListPost={setListPost}/>
+                <PostList listPost={listPost} setListPost={setListPost} />
             </div>
 
             {/* Phần bên phải */}

@@ -3,12 +3,13 @@ import { Modal, Button, Input, Upload, message, Row, Col, Select } from 'antd';
 import { SmileOutlined, PictureOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { Post } from './post.type';
+import { PostProps } from '../Home';
 
 const { TextArea } = Input;
 type PostListProps = {
-  onPostCreated: (newPost: Post) => void;
+  setListPost: React.Dispatch<React.SetStateAction<PostProps[]>>; // Function to set the posts state
 };
-const PostCreator: React.FC<PostListProps> = ({ onPostCreated }) => {
+const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [text, setText] = useState<string>('');
@@ -94,7 +95,8 @@ const PostCreator: React.FC<PostListProps> = ({ onPostCreated }) => {
         }
 
         message.success('Đăng bài viết thành công!');
-        onPostCreated(postResponse.data.post)
+        const postsResponse = await axios.get('https://be-travel-tc-x28-1end.vercel.app/post');
+        setListPost(postsResponse.data);  
       }
     } catch (error) {
       console.error(error);
@@ -104,7 +106,7 @@ const PostCreator: React.FC<PostListProps> = ({ onPostCreated }) => {
     setText('');
     setFileList([]);
     setPrivacy('private');
-    setEmotion('happy');
+    setEmotion('');
     setIsModalOpen(false);
     setIsMediaUploadVisible(false);
     setIsEmotionSelectorVisible(false);

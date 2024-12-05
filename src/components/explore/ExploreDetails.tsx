@@ -9,25 +9,10 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { Select } from 'antd';
 import PostList from '../posts&comments/ListPosts';
 import { IoMdReturnLeft } from 'react-icons/io';
+import { PostProps } from '../Home';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
 
-interface PostProps {
-    content: string;
-    privacy: 'private' | 'public';
-    type: 'text' | 'image';
-    author: {
-        _id: string;
-        name: string;
-        profilePic: {
-            profilePicture: string;
-        };
-    };
-    emotion?: string;
-    timestamp: string;
-    location?: string;
-    img?: string[];
-}
 interface CityType {
     cityName: string;
     coordinates: [number, number];
@@ -83,7 +68,6 @@ const ExploreDetails: React.FC = () => {
         };
         fetchData();
     }, [cityName]);
-
     const handleSearchClick = (value: string) => {
         const selectedCity = listCity.find(city => city.cityName === value);
         if (selectedCity) {
@@ -173,7 +157,7 @@ const ExploreDetails: React.FC = () => {
                         <p>{selectedDestination?.description}</p>
                     </div>
                     <p className='text-xl font-bold my-4'>Một số bài viết liên quan</p>
-                    <PostList listPost={listPost}/>
+                    <PostList listPost={listPost} setListPost={setListPost}/>
                 </div>
             )}
             {/* Phần bên trái: Bản đồ */}
