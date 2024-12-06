@@ -1,4 +1,3 @@
-
 import { Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -52,10 +51,11 @@ const Login = () => {
       reset();
     }
   };
+
   return (
     <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-60 p-5 shadow-2xl">
       <h1 className="text-4xl font-semibold">Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div>
           <label className="font-semibold" htmlFor="email">
             Email<span className="text-red-500">*</span>:
@@ -70,7 +70,7 @@ const Login = () => {
                 size="large"
                 placeholder="Enter your email"
                 className="w-full hover:border-red-300 focus:border-red-300"
-                />
+              />
             )}
           />
           {errors.email && (
@@ -89,14 +89,25 @@ const Login = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your password"
-                className="w-full hover:border-red-300 [&_.ant-input-affix-wrapper-focused]:!border-red-500"
-                />
+                className="w-full hover:border-red-300 [&_.ant-input-affix-wrapper-focused]:!border-red-500 mb-2"
+              />
             )}
           />
+          <p>
+            <span
+             
+              onClick={() => navigate("/auth/forgotpassword")}
+              className="cursor-pointer font-semibold hover:text-red-500"
+            >
+              Forgot Password?
+            </span>
+          </p>
+          
           {errors.password && (
             <p className="text-xs text-red-500">{errors.password.message}</p>
           )}
         </div>
+        
         <div className="flex flex-col items-center gap-2">
           <Button
             htmlType="submit"
@@ -115,6 +126,7 @@ const Login = () => {
               Register
             </span>
           </p>
+          
         </div>
       </form>
     </div>
