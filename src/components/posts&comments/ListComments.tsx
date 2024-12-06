@@ -34,13 +34,11 @@ const ListComments: React.FC<ListCommentsProps> = ({ comment, postId, setListPos
         fetchData();
     }, []);
 
-    // Fetch all comments for the post
     const fetchComments = async () => {
         try {
             const response = await axios.get(`${beUrl}/post/${postId}`);
             const res = await axios.get(`${beUrl}/post`)
             setComments(response.data.comments);
-            console.log(response.data.comments)
             setListPost(res.data)
         } catch (error) {
             console.error('Failed to fetch comments:', error);
@@ -51,38 +49,17 @@ const ListComments: React.FC<ListCommentsProps> = ({ comment, postId, setListPos
         if (newComment.trim() && userData) {
             try {
                 if (replyingTo) {
-                    // Updating a reply
                     await axios.put(`${beUrl}/comments/rep`, {
                         commentId: replyingTo._id,
                         content: newComment,
                         userId: userData._id,
                     });
-                    // updatedComment.data.author = userData;
-
-                    // const updatedComments = comments.map((comment) => {
-                    //     if (comment._id === replyingTo._id) {
-                    //         return {
-                    //             ...comment,
-                    //             replies: [updatedComment.data, ...comment.replies],
-                    //             content: newComment,
-                    //         };
-                    //     }
-                    //     return comment;
-                    // });
-
-                    // setComments(updatedComments);
                 } else {
-                    // Adding a new comment
                     await axios.put(`${beUrl}/post/cmt`, {
                         postId: postId,
                         content: newComment,
                         userId: userData._id,
                     });
-                    // updatedComment.data.author = userData;
-                    // setComments([{
-                    //     ...updatedComment.data,
-                    //     content: newComment,
-                    // }, ...comments]);
                 }
                 setNewComment('');
                 setReplyingTo(null);
@@ -117,8 +94,8 @@ const ListComments: React.FC<ListCommentsProps> = ({ comment, postId, setListPos
             </div>
             <div className="border-t pt-2 bg-white sticky bottom-0">
                 {replyingTo && (
-                    <div className="ml-16 text-sm text-gray-600">
-                        Replying to {replyingTo?.author?.name}
+                    <div className="ml-16 text-sm text-gray-600 flex items-center gap-2">
+                        Replying to {<p className='text-black font-semibold'>{replyingTo?.author?.name}</p>}
                         <button
                             className="text-red-500 ml-2 cursor-pointer"
                             onClick={() => setReplyingTo(null)}
@@ -128,8 +105,8 @@ const ListComments: React.FC<ListCommentsProps> = ({ comment, postId, setListPos
                     </div>
                 )}
                 <div className="flex gap-4 items-start p-2">
-                    <div className="bg-red-500 w-8 h-8 rounded-full mt-1"></div>
-                    <div className="flex items-center flex-grow">
+                <img className="bg-red-500 w-8 h-8 rounded-full" src={userData?.profilePic?.profilePicture}></img>
+                <div className="flex items-center flex-grow">
                         <textarea
                             rows={1}
                             placeholder="Write your comment..."
