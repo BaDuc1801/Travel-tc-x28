@@ -1,19 +1,20 @@
 import React from 'react';
-import PostCard from './PostCard';
-import { samplePosts } from '../list';
+import PostCard from './PostCard.tsx';
+import { PostProps } from '../Home'; 
 
-const PostList: React.FC = () => {
+export interface PostListProps {
+  listPost: PostProps[]; 
+  setListPost: React.Dispatch<React.SetStateAction<PostProps[]>>; 
+}
+
+const PostList: React.FC<PostListProps> = ({ listPost, setListPost }) => {
   return (
-    <div className='flex flex-col m-auto gap-5'>
-      {samplePosts.map((post, index) => (
+    <div className="flex flex-col m-auto gap-5">
+      {listPost.map((post, index) => (
         <PostCard
-          key={index}
-          username={post.username}
-          location={post.location}
-          timePosted={post.timePosted}
-          content={post.content}
-          imageSrc={post.imageSrc}
-          comments={post.comments}
+          key={index} 
+          items={post}
+          setListPost={setListPost}
         />
       ))}
     </div>
@@ -21,4 +22,3 @@ const PostList: React.FC = () => {
 };
 
 export default PostList;
-

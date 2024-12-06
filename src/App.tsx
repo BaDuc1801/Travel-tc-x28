@@ -7,7 +7,7 @@ import Layout from "./components/Layout.tsx";
 import Explore from "./components/explore/Explore.tsx";
 import ExploreDetails from "./components/explore/ExploreDetails.tsx";
 import UserProfile from "./components/profile/UserProfile.tsx";
-import PostCreator from "./components/postcreat/PostCreator.tsx"; // Import PostCreator
+// import PostCreator from "./components/postcreat/PostCreator.tsx"; // Import PostCreator
 
 const App = () => {
   return (
@@ -18,7 +18,6 @@ const App = () => {
         <Route path="/explore" element={<Explore />} />
         <Route path="/explore/:cityName" element={<ExploreDetails />} />
         <Route path="/profile/:id" element={<UserProfile/>}/>
-        <Route path="/create-post" element={<PostCreator />} /> 
       </Route>
 
       {/* Route cho auth */}

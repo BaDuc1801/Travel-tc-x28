@@ -1,10 +1,9 @@
 export interface Post {
-    content: string;
-    img?: { url: string; alt: string };
-    privacy: 'private' | 'public';
-    type: 'text' | 'image';
-    author: { name: string; avatar: string };
-    emotion?: string;
-    timestamp: string;
-  }
-  
+  content: string;
+  privacy: 'private' | 'public';
+  type: 'image' | 'text';
+  emotion: string;
+  location: string;
+  timestamp: string;
+  userId: string;
+}
