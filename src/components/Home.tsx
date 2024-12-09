@@ -187,7 +187,7 @@ const Home: React.FC = () => {
                         ))}
                     </div>
                 </div>
-                <PostCreator setListPost={setListPost} />
+                <PostCreator />
                 <PostList listPost={listPost} setListPost={setListPost} />
             </div>
 

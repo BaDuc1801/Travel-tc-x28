@@ -6,4 +6,13 @@ export interface Post {
   location: string;
   timestamp: string;
   userId: string;
+  img: {
+    url?: string| undefined;
+    alt?: string| undefined;
+  }
+  author: {
+    name: string,
+    avatar: string
+  }
+
 }
