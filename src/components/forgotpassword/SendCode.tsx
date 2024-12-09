@@ -3,27 +3,37 @@ import { Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const VerificationCode = () => {
-  const [countdown, setCountdown] = useState(41); 
-  const [code, setCode] = useState<string[]>(new Array(6).fill("")); 
+  const [countdown, setCountdown] = useState(41);
+  const [code, setCode] = useState<string[]>(new Array(6).fill(""));
+  const [isResendEnabled, setIsResendEnabled] = useState(false); 
+  const [showCountdown, setShowCountdown] = useState(true); 
   const navigate = useNavigate();
 
- 
   useEffect(() => {
-    if (countdown === 0) return; 
+    if (countdown === 0) {
+      setIsResendEnabled(true); 
+      setShowCountdown(false); 
+      return;
+    }
+
     const interval = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, [countdown]);
 
-  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleCodeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
     const newCode = [...code];
     newCode[index] = e.target.value;
 
     if (e.target.value.length === 1 && index < 5) {
-      
-      const nextInput = document.getElementById(`verification-code-input-${index + 1}`);
+      const nextInput = document.getElementById(
+        `verification-code-input-${index + 1}`,
+      );
       nextInput?.focus();
     }
 
@@ -32,32 +42,50 @@ const VerificationCode = () => {
 
   const handleSubmit = () => {
     message.success("Mã xác minh thành công!");
-    navigate("/login"); 
+    navigate("/login");
   };
 
   const resendCode = () => {
-    setCountdown(41);
+    setCountdown(41); 
+    setIsResendEnabled(false); 
+    setShowCountdown(true); 
     message.success("Mã xác minh đã được gửi lại!");
   };
 
   return (
-    <div className="w-[480px] h-auto flex flex-col p-6 rounded-2xl shadow-sm bg-white justify-center items-center">
-      <div className="mb-3">
-        <h2 className="text-2xl font-semibold mt-3 mb-2 gap-6">Xác thực</h2>
-        <span className="text-base font-normal text-left text-gray-600">
-          Mã xác minh đã được gửi đến email: <b>caimailxautinh@gmail.com</b>, vui lòng nhập mã để xác minh tài khoản của bạn.
-        </span>
+    <div className="flex h-auto w-[480px] flex-col items-center justify-center rounded-2xl bg-white p-4 shadow-lg bg-opacity-60 shadow-2xl">
+      <div className="mb-4 w-full">
+        <h2 className="text-center text-2xl font-semibold">Xác thực</h2>
+        <p className="text-center text-base font-normal text-gray-600">
+          Mã xác minh đã được gửi đến email của bạn, vui lòng nhập mã để xác minh tài khoản của bạn.
+        </p>
       </div>
 
-      <div className="otp-form w-full">
-        <div className="flex justify-between mb-3 text-sm w-full items-center">
+      <div className="otp-form mb-6 w-full">
+        <div className="mb-3 flex w-full items-center justify-between text-sm relative">
           <span className="font-medium text-gray-700">Mã xác minh</span>
-          <span>Gửi lại mã trong <b>{`00:${countdown.toString().padStart(2, "0")}`}</b></span>
+         
+          {showCountdown && (
+            <span>
+              Gửi lại mã trong{" "}
+              <b>{`00:${countdown.toString().padStart(2, "0")}`}</b>
+            </span>
+          )}
+
+          {isResendEnabled && (
+            <Button
+              type="link"
+              onClick={resendCode}
+              className="absolute top-0 right-0 text-red-500 text-sm font-semibold"
+            >
+              Gửi lại mã
+            </Button>
+          )}
         </div>
 
         <form
           noValidate
-          className="verification-form flex justify-center mb-3"
+          className="verification-form mb-3 flex w-full justify-between"
         >
           {code.map((digit, index) => (
             <input
@@ -68,38 +96,30 @@ const VerificationCode = () => {
               value={digit}
               onChange={(e) => handleCodeChange(e, index)}
               placeholder="-"
-              className="p-inputtext p-component p-element verification-input"
+              className="h-12 w-12 rounded-md border border-gray-300 text-center text-xl focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           ))}
         </form>
 
-        <div className="flex justify-center font-normal gap-1 text-sm items-center mt-6">
-          Quay lại{" "}
-          <a
-            href="/login"
-            className="no-underline font-semibold text-branding-primary-700 text-base cursor-pointer"
-          >
-            Đăng nhập
-          </a>
-        </div>
-
         <Button
           type="primary"
           onClick={handleSubmit}
-          className="w-full mt-4"
+          className="w-full bg-red-500 text-sm font-semibold hover:!bg-red-600"
+          size="large"
           disabled={countdown > 0}
         >
           Xác nhận
         </Button>
 
-        <Button
-          type="link"
-          onClick={resendCode}
-          className="w-full mt-2"
-          disabled={countdown > 0}
-        >
-          Gửi lại mã
-        </Button>
+        <div className="mt-4 flex items-center justify-center gap-1 text-sm font-normal">
+          Quay lại{" "}
+          <a
+            href="/login"
+            className="cursor-pointer font-semibold text-red-500 no-underline"
+          >
+            Đăng nhập
+          </a>
+        </div>
       </div>
     </div>
   );

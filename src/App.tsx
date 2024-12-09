@@ -9,6 +9,7 @@ import ExploreDetails from "./components/explore/ExploreDetails.tsx";
 import UserProfile from "./components/profile/UserProfile.tsx";
 import ForgotPassword from "./components/forgotpassword/ForgotPassword.tsx";
 import SendCode from "./components/forgotpassword/SendCode.tsx";
+import ResetPassword from "./components/forgotpassword/ResetPassword.tsx";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="forgotpassword" element={<ForgotPassword/>} />
         <Route path="sendcode" element={<SendCode/>} />
+        <Route path="resetpassword" element={<ResetPassword/>} />
       </Route>
 
       {/* Route không tìm thấy */}
