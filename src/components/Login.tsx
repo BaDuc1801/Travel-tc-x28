@@ -1,4 +1,3 @@
-
 import { Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -55,11 +54,10 @@ const Login = () => {
       reset();
     }
   };
-  
   return (
     <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-60 p-5 shadow-2xl">
-      <h1 className="text-4xl font-semibold">Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
+      <h2 className="text-4xl font-semibold"> Đăng nhập </h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div>
           <label className="font-semibold" htmlFor="email">
             Email<span className="text-red-500">*</span>:
@@ -74,7 +72,7 @@ const Login = () => {
                 size="large"
                 placeholder="Enter your email"
                 className="w-full hover:border-red-300 focus:border-red-300"
-                />
+              />
             )}
           />
           {errors.email && (
@@ -83,7 +81,7 @@ const Login = () => {
         </div>
         <div>
           <label className="font-semibold" htmlFor="password">
-            Password<span className="text-red-500">*</span>:
+            Mật khẩu<span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -93,14 +91,25 @@ const Login = () => {
                 {...field}
                 size="large"
                 placeholder="Enter your password"
-                className="w-full hover:border-red-300 [&_.ant-input-affix-wrapper-focused]:!border-red-500"
-                />
+                className="w-full hover:border-red-300 [&_.ant-input-affix-wrapper-focused]:!border-red-500 mb-2"
+              />
             )}
           />
+          <p>
+            <span
+             
+              onClick={() => navigate("/auth/forgotpassword")}
+              className="cursor-pointer font-semibold hover:text-red-500"
+            >
+              Quên mật khẩu?
+            </span>
+          </p>
+          
           {errors.password && (
             <p className="text-xs text-red-500">{errors.password.message}</p>
           )}
         </div>
+        
         <div className="flex flex-col items-center gap-2">
           <Button
             htmlType="submit"
@@ -111,14 +120,15 @@ const Login = () => {
             Submit
           </Button>
           <p>
-            Don't have an account?{" "}
+            Không có tài khoản?{" "}
             <span
               onClick={() => navigate("/auth/register")}
               className="cursor-pointer font-semibold hover:text-red-500"
             >
-              Register
+              Đăng kí
             </span>
           </p>
+          
         </div>
       </form>
     </div>

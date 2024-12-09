@@ -65,6 +65,14 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
       location,
       timestamp: new Date().toISOString(),
       userId: user.id,
+      img: {
+        url: undefined,
+        alt: undefined
+      },
+      author: {
+        name: '',
+        avatar: ''
+      }
     };
 
     try {
@@ -102,7 +110,6 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
       console.error(error);
     }
 
-    // Reset các trường
     setText('');
     setFileList([]);
     setPrivacy('private');
