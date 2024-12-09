@@ -37,8 +37,7 @@ const Login = () => {
         data,
       );
       message.success("Login successful");
-      const data1 = axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
-      console.log(data1)
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
       window.localStorage.setItem('user', JSON.stringify(response.data));
       window.localStorage.setItem('authenticated', 'true');
       window.localStorage.setItem('likedPosts', JSON.stringify(response.data.likedPosts) || "[]");

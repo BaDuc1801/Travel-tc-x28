@@ -135,11 +135,11 @@ const Home: React.FC = () => {
     const countComments = () => {
         const countReplies = (comments: CommentProps[]): number => {
             return comments.reduce((total, comment) => {
-                // Đếm số lượng comment con (replies) trong mỗi comment
-                return total + 1 + countReplies(comment.replies); // 1 cho comment chính + đệ quy tính comment con
+                const isMyComment = comment.author.name === userData?.name;
+                return total + (isMyComment ? 1 : 0) + countReplies(comment.replies);
             }, 0);
         };
-
+    
         return listPost.reduce((total, post) => total + (post.comments ? countReplies(post.comments) : 0), 0);
     };
 
