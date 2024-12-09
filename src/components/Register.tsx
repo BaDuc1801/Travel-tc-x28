@@ -84,14 +84,14 @@ const Register: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center rounded-xl bg-white bg-opacity-60 p-5 py-10 shadow-2xl">
-      <h1 className="mb-2 text-4xl font-semibold">Register</h1>
+      <h2 className="mb-2 text-4xl font-semibold">Đăng kí</h2>
       <form
         onSubmit={handleSubmit(onSubmit, showErrorMessages)}
         className="flex flex-col gap-7"
       >
         <div>
           <label className="mb-2 font-semibold" htmlFor="name">
-            Name<span className="mb-2 text-red-500">*</span>:
+            Tên tài khoản<span className="mb-2 text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -126,7 +126,7 @@ const Register: React.FC = () => {
         </div>
         <div>
           <label className="font-semibold" htmlFor="password">
-            Password<span className="text-red-500">*</span>:
+            Mật khẩu<span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -142,13 +142,13 @@ const Register: React.FC = () => {
           />
           {passwordValue && !/[@#$%&*!]/.test(passwordValue) && (
             <p className="password-requirements">
-              Password must contain at least 1 special character
+              Mật khẩu cần một kí tự đặc biệt
             </p>
           )}
         </div>
         <div>
           <label className="font-semibold" htmlFor="confirmPassword">
-            Confirm Password<span className="text-red-500">*</span>:
+          Xác nhận mật khẩu <span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}

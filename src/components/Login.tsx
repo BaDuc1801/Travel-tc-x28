@@ -57,7 +57,7 @@ const Login = () => {
   };
   return (
     <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-60 p-5 shadow-2xl">
-      <h1 className="text-4xl font-semibold">Login</h1>
+      <h2 className="text-4xl font-semibold"> Đăng nhập </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div>
           <label className="font-semibold" htmlFor="email">
@@ -82,7 +82,7 @@ const Login = () => {
         </div>
         <div>
           <label className="font-semibold" htmlFor="password">
-            Password<span className="text-red-500">*</span>:
+            Mật khẩu<span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -102,7 +102,7 @@ const Login = () => {
               onClick={() => navigate("/auth/forgotpassword")}
               className="cursor-pointer font-semibold hover:text-red-500"
             >
-              Forgot Password?
+              Quên mật khẩu?
             </span>
           </p>
           
@@ -121,12 +121,12 @@ const Login = () => {
             Submit
           </Button>
           <p>
-            Don't have an account?{" "}
+            Không có tài khoản?{" "}
             <span
               onClick={() => navigate("/auth/register")}
               className="cursor-pointer font-semibold hover:text-red-500"
             >
-              Register
+              Đăng kí
             </span>
           </p>
           
