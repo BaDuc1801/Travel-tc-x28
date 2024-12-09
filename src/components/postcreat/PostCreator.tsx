@@ -63,6 +63,12 @@ const PostCreator: React.FC = () => {
       return;
     }
 
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    if (!user || !user.id) {
+      message.error('Không tìm thấy thông tin người dùng.');
+      return;
+    }
+
     const newPost: Post = {
       content: text,
       img:
@@ -82,6 +88,7 @@ const PostCreator: React.FC = () => {
       emotion,
       location,
       timestamp: new Date().toISOString(),
+      userId: user.id,
     };
 
     try {
@@ -105,7 +112,7 @@ const PostCreator: React.FC = () => {
     setIsModalOpen(false);
     setIsMediaUploadVisible(false);
     setIsEmotionSelectorVisible(false);
-  }, [text, fileList, privacy, emotion]);
+  }, [text, fileList, privacy, emotion, location]);
 
   const handleFileChange = useCallback(({ fileList }: { fileList: any[] }) => {
     setFileList(fileList);
@@ -195,7 +202,7 @@ const PostCreator: React.FC = () => {
 
           {location && (
             <span>
-              ở: <b>{location}</b>.
+              ở <b>{location}</b>.
             </span>
           )}
         </div>

@@ -19,7 +19,6 @@ const App = () => {
         <Route path="/explore" element={<Explore />} />
         <Route path="/explore/:cityName" element={<ExploreDetails />} />
         <Route path="/profile/:id" element={<UserProfile/>}/>
-        <Route path="/create-post" element={<PostCreator />} /> 
       </Route>
 
       {/* Route cho auth */}
