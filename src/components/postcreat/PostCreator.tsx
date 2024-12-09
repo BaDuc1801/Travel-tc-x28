@@ -16,7 +16,7 @@ const PostCreator: React.FC = () => {
   const [text, setText] = useState<string>("");
   const [fileList, setFileList] = useState<any[]>([]);
   const [privacy, setPrivacy] = useState<Post["privacy"]>("private");
-  const [emotion, setEmotion] = useState<Post["emotion"]>("happy");
+  const [emotion, setEmotion] = useState<Post['emotion']>('');
   const [isMediaUploadVisible, setIsMediaUploadVisible] = useState(false);
   const [isEmotionSelectorVisible, setIsEmotionSelectorVisible] =useState (false);
   const [location, setLocation] = useState<string>("");
@@ -50,13 +50,13 @@ const PostCreator: React.FC = () => {
   };
 
   const emotions = [
-    { label: "Vui vẻ", value: "😀 vui vẻ", icon: "😀" },
-    { label: "Buồn bã", value: "😞 buồn bã", icon: "😞" },
-    { label: "Tức giận", value: "😡 tức giận", icon: "😡" },
-    { label: "Chán nản", value: "😒 chán nản", icon: "😒" },
-    { label: "Ngạc nhiên", value: "😲 ngạc nhiên", icon: "😲" },
+    { label: 'Vui vẻ', value: '😀 vui vẻ', icon: '😀' },
+    { label: 'Buồn bã', value: '😞 buồn bã', icon: '😞' },
+    { label: 'Tức giận', value: '😡 tức giận', icon: '😡' },
+    { label: 'Chán nản', value: '😒 chán nản', icon: '😒' },
+    { label: 'Ngạc nhiên', value: '😲 ngạc nhiên', icon: '😲' },
   ];
-
+  
   const handleOk = useCallback(async () => {
     if (!text.trim()) {
       message.warning("Nội dung bài viết không được để trống.");
@@ -111,7 +111,7 @@ const PostCreator: React.FC = () => {
     setText("");
     setFileList([]);
     setPrivacy("private");
-    setEmotion("happy");
+    setEmotion('');
     setIsModalOpen(false);
     setIsMediaUploadVisible(false);
     setIsEmotionSelectorVisible(false);

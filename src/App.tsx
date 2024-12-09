@@ -7,7 +7,7 @@ import Layout from "./components/Layout.tsx";
 import Explore from "./components/explore/Explore.tsx";
 import ExploreDetails from "./components/explore/ExploreDetails.tsx";
 import UserProfile from "./components/profile/UserProfile.tsx";
-import ForgotPassword from "./components/forgotpassword/forgotpassword.tsx";
+import ForgotPassword from "./components/forgotpassword/ForgotPassword.tsx";
 import SendCode from "./components/forgotpassword/SendCode.tsx";
 
 
