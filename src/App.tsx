@@ -7,8 +7,9 @@ import Layout from "./components/Layout.tsx";
 import Explore from "./components/explore/Explore.tsx";
 import ExploreDetails from "./components/explore/ExploreDetails.tsx";
 import UserProfile from "./components/profile/UserProfile.tsx";
-import PostCreator from "./components/postcreat/PostCreator.tsx"; 
 import ForgotPassword from "./components/forgotpassword/forgotpassword.tsx";
+import SendCode from "./components/forgotpassword/SendCode.tsx";
+
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgotpassword" element={<ForgotPassword/>} />
+        <Route path="sendcode" element={<SendCode/>} />
       </Route>
 
       {/* Route không tìm thấy */}

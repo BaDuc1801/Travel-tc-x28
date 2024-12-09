@@ -99,6 +99,7 @@ const ForgotPassword = () => {
             Quay lại
           </Button>
           <Button
+            onClick={() => navigate("auth/sendcode")}
             className="w-1/2 !bg-red-500 !px-6 text-sm hover:!bg-red-600"
             type="primary"
             size="large"
