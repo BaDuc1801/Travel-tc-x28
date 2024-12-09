@@ -77,7 +77,10 @@ const PostCreator: React.FC = () => {
               url: URL.createObjectURL(fileList[0].originFileObj!),
               alt: "Uploaded media",
             }
-          : undefined,
+          : {
+            url : undefined,
+            alt : undefined
+          },
       privacy,
       type: fileList.length > 0 ? "image" : "text",
       author: {
