@@ -152,10 +152,10 @@ const Home: React.FC = () => {
                     <p className='text-center mt-4 text-xl font-semibold pb-2'>{userData?.name}</p>
                 </div>
                 <div className='grid grid-cols-2 grid-rows-2 bg-white p-4'>
-                    <div className='flex items-center gap-2 text-red-500'><p className='rounded-full bg-pink-100 w-10 h-10 flex items-center justify-center'><FaHandHoldingHeart /></p><div className='flex flex-col'><p>Cảm xúc</p><p className='text-black'>{userData?.likedPosts.length}</p></div></div>
+                    <div className='flex items-center gap-2 text-red-500'><p className='rounded-full bg-pink-100 w-10 h-10 flex items-center justify-center'><FaHandHoldingHeart /></p><div className='flex flex-col'><p>Cảm xúc</p><p className='text-black'>{userData?.likedPosts.length || 0}</p></div></div>
                     <div className='flex items-center gap-2 text-green-500'><p className='rounded-full bg-green-100 w-10 h-10 flex items-center justify-center'><BiSolidCommentDetail /></p><div className='flex flex-col'><p>Bình luận</p><p className='text-black'>{countComments()}</p></div></div>
-                    <div className='flex items-center gap-2 text-blue-500 '><p className='rounded-full bg-blue-100 w-10 h-10 flex items-center justify-center'><BsFilePostFill /></p><div className='flex flex-col'><p>Bài đăng</p><p className='text-black'>{userData?.posts.length}</p></div></div>
-                    <div className='flex items-center gap-2 text-purple-500 '><p className='rounded-full bg-purple-100 w-10 h-10 flex items-center justify-center'><RiUserFollowFill /></p><div className='flex flex-col'><p>Theo dõi</p><p className='text-black'>{userData?.following.length}</p></div></div>
+                    <div className='flex items-center gap-2 text-blue-500 '><p className='rounded-full bg-blue-100 w-10 h-10 flex items-center justify-center'><BsFilePostFill /></p><div className='flex flex-col'><p>Bài đăng</p><p className='text-black'>{userData?.posts.length || 0}</p></div></div>
+                    <div className='flex items-center gap-2 text-purple-500 '><p className='rounded-full bg-purple-100 w-10 h-10 flex items-center justify-center'><RiUserFollowFill /></p><div className='flex flex-col'><p>Theo dõi</p><p className='text-black'>{userData?.following.length || 0}</p></div></div>
                 </div>
                 <div className='mt-2'>
                     <Menu

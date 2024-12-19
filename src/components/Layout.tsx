@@ -35,14 +35,13 @@ const Layout: React.FC = () => {
                     <p className="text-2xl font-bold ml-2">Travel</p>
                 </div>
                 <div className="flex gap-10 items-center w-1/3 justify-center text-xl">
-                    <Link to={'/'} className={(active === "Home") ? "text-red-400" : "white"} onClick={() => { setActive("Home") }}>Home</Link>
-                    <Link to={'/explore'} className={(active === "Explore") ? "text-red-400" : "white"} onClick={() => { setActive("Explore") }}>Explore</Link>
-                    <a href="#" className={(active === "Destinations") ? "text-red-400" : "white"} onClick={() => { setActive("Destinations") }}>Destinations</a>
+                    <Link to={'/'} className={(active === "Home") ? "text-red-400" : "white"} onClick={() => { setActive("Home") }}>Trang chủ</Link>
+                    <Link to={'/explore'} className={(active === "Explore") ? "text-red-400" : "white"} onClick={() => { setActive("Explore") }}>Khám phá</Link>
                 </div>
                 {!isAuthenticated ?
                     <div className="flex gap-6 text-lg w-1/3 justify-end items-center">
-                        <button className="hover:text-red-400 rounded-lg" onClick={() => nav('/auth/login')}>Sign in</button>
-                        <button className="hover:bg-red-500 rounded-lg px-2 h-10 bg-red-400" onClick={() => nav('/auth/register')}>Sign up</button>
+                        <button className="hover:text-red-400 rounded-lg" onClick={() => nav('/auth/login')}>Đăng nhập</button>
+                        <button className="hover:bg-red-500 rounded-lg px-2 h-10 bg-red-400" onClick={() => nav('/auth/register')}>Đăng kí</button>
                     </div> :
                     <div className="flex items-center gap-2 w-1/3 justify-end">
                         <p>{user?.name}</p>

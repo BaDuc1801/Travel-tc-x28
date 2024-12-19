@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
+import { GiFlexibleStar } from "react-icons/gi";
 
 const schema = yup.object().shape({
   email: yup
@@ -56,6 +57,10 @@ const Login = () => {
   };
   return (
     <div className="flex flex-col items-center gap-5 rounded-xl bg-white bg-opacity-60 p-5 shadow-2xl">
+      <div className="flex items-center justify-center text-red-500">
+        <GiFlexibleStar className="text-3xl" />
+        <p className="text-2xl font-bold ml-2">Travel</p>
+      </div>
       <h2 className="text-4xl font-semibold"> Đăng nhập </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div>
@@ -97,19 +102,19 @@ const Login = () => {
           />
           <p>
             <span
-             
+
               onClick={() => navigate("/auth/forgotpassword")}
               className="cursor-pointer font-semibold hover:text-red-500"
             >
               Quên mật khẩu?
             </span>
           </p>
-          
+
           {errors.password && (
             <p className="text-xs text-red-500">{errors.password.message}</p>
           )}
         </div>
-        
+
         <div className="flex flex-col items-center gap-2">
           <Button
             htmlType="submit"
@@ -128,7 +133,7 @@ const Login = () => {
               Đăng kí
             </span>
           </p>
-          
+
         </div>
       </form>
     </div>

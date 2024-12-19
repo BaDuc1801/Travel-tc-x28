@@ -4,6 +4,7 @@ import { SmileOutlined, PictureOutlined, EnvironmentOutlined } from '@ant-design
 import axios from 'axios';
 import { Post } from './post.type';
 import { PostProps } from '../Home';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 type PostListProps = {
@@ -104,7 +105,7 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
 
         message.success('Đăng bài viết thành công!');
         const postsResponse = await axios.get('https://be-travel-tc-x28-1end.vercel.app/post');
-        setListPost(postsResponse.data);  
+        setListPost(postsResponse.data);
       }
     } catch (error) {
       console.error(error);
@@ -133,6 +134,19 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
     setIsMediaUploadVisible(false);
   }, []);
 
+  const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+  const nav = useNavigate()
+  const [authModal, setAuthModal] = useState<boolean>(false)
+
+  const checkAuth = () => {
+    console.log('checkAuth called'); 
+    if (isAuthenticated === true) {
+      setIsModalOpen(true)
+    } else {
+      setAuthModal(true)
+    }
+  }
+
   return (
     <div>
       <div
@@ -148,8 +162,7 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
           maxWidth: '600px',
           margin: '10px auto',
         }}
-        onClick={() => setIsModalOpen(true)}
-      >
+        onClick={() => checkAuth()}>
         <div
           style={{
             width: '40px',
@@ -285,6 +298,15 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
           </Button>
         </div>
       </Modal>
+      <Modal
+          open={authModal}
+          onCancel={() => setAuthModal(false)}
+          onOk={() => nav('/auth/login')}
+          okText="Đăng nhập"
+          style={{ top: 50 }}
+        >
+            <p>Bạn cần đăng nhập để có thể đăng bài</p>
+        </Modal>
     </div>
   );
 };

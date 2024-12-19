@@ -32,7 +32,6 @@ const CommentCard: React.FC<CommentProps> = ({
     replies,
     level = 0,
     onReplyClick,
-    replyingToName
 }) => {
     const timeAgo = (timestamp: Date | string) => {
         if (!timestamp) return 'just now';
@@ -117,7 +116,7 @@ const CommentCard: React.FC<CommentProps> = ({
                             <div className="bg-red-200 pl-2 pr-2 rounded-lg mr-4">
                                 <p className="font-semibold inline"> {author?.name}</p>
                                 <p className="inline ml-2">{timeAgo(timestamp)}</p>
-                                <p className="break-all whitespace-normal overflow-hidden flex items-center"><p>{!replyingToName ? <p>{replyingToName}</p> : <p className='mr-2'>{`@${replyingToName}`}</p>}</p>{content}</p>
+                                <p className="break-all whitespace-normal overflow-hidden flex items-center">{content}</p>
                             </div>
                             <div className="cursor-pointer flex items-center gap-16 ml-2 mt-1 mb-2 content-[14px]">
                                 <div className="flex items-center gap-2">

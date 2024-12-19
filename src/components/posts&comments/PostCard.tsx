@@ -6,6 +6,8 @@ import ListComments from './ListComments.tsx';
 import axios from 'axios';
 import { PostProps } from '../Home.tsx';
 import { CommentProps } from './CommentCard.tsx';
+import { BsDot } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 // PostCardProps to match the props passed to PostCard component
 interface PostCardProps {
@@ -100,9 +102,21 @@ const PostCard: React.FC<PostCardProps> = (props) => {
     const countTotalComments = (comments: CommentProps[] | undefined): number => {
         if (!comments) return 0;
         return comments.reduce((total, comment) => {
-            return total + 1 + countTotalComments(comment.replies); 
+            return total + 1 + countTotalComments(comment.replies);
         }, 0);
     };
+
+    //   const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+    //   const nav = useNavigate()
+    //   const [authModal, setAuthModal] = useState<boolean>(false)
+    
+    //   const checkAuth = () => {
+    //     if (isAuthenticated === true) {
+    //       setIsModalOpen(true)
+    //     } else {
+    //       setAuthModal(true)
+    //     }
+    //   }
 
     return (
         <div className='p-4 rounded-lg shadow-xl mt-2 bg-white'>
@@ -113,13 +127,15 @@ const PostCard: React.FC<PostCardProps> = (props) => {
                         <p className='font-semibold'>{items?.author?.name}</p>
                         <p>{items.emotion}</p>
                     </div>
-                    <p>{timeAgo(items.timestamp)}</p>
+                    <div className='flex items-center'>
+                        {items?.location ? <div className='flex items-center gap-2 mr-2'>
+                            <FaLocationDot />
+                            <span className='flex items-center'>{items.location} <BsDot /></span>
+                        </div> : <div></div>}
+                        <p>{timeAgo(items.timestamp)}</p>
+                    </div>
                 </div>
             </div>
-            {items?.location ? <div className='flex items-center mt-4 mb-2 gap-2'>
-                <FaLocationDot />
-                <span>{items.location}</span>
-            </div> : <div className='mt-2'></div>}
             <div className='mb-4'>
                 <p>{items.content}</p>
             </div>
@@ -223,6 +239,15 @@ const PostCard: React.FC<PostCardProps> = (props) => {
                     {items.comments && <ListComments comment={items.comments} postId={items._id} setListPost={setListPost} />}
                 </div>
             </Modal>
+            {/* <Modal
+                      open={authModal}
+                      onCancel={() => setAuthModal(false)}
+                      onOk={() => nav('/auth/login')}
+                      okText="Đăng nhập"
+                      style={{ top: 50 }}
+                    >
+                        <p>Bạn cần đăng nhập để có thể đăng bài</p>
+                    </Modal> */}
         </div>
     );
 };
