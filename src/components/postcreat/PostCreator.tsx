@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Modal, Button, Input, Upload, message, Row, Col } from "antd";
+import { Modal, Button, Input, Upload, message, Row, Col, Select } from "antd";
 import {
   SmileOutlined,
   PictureOutlined,
@@ -18,7 +18,7 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [text, setText] = useState<string>("");
   const [fileList, setFileList] = useState<any[]>([]);
-  const [privacy, setPrivacy] = useState<Post["privacy"]>("private");
+  const [privacy, setPrivacy] = useState<Post["privacy"]>("public");
   const [emotion, setEmotion] = useState<Post["emotion"]>("");
   const [isMediaUploadVisible, setIsMediaUploadVisible] = useState(false);
   const [isEmotionSelectorVisible, setIsEmotionSelectorVisible] =
@@ -176,7 +176,7 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
   }, []);
 
   const handleCheckInClick = useCallback(() => {
-    setIsLocationModalOpen(true); 
+    setIsLocationModalOpen(true);
     setIsEmotionSelectorVisible(false);
   }, []);
 
@@ -352,15 +352,15 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
             style={{ marginBottom: "20px" }}
           />
 
-          {/* Danh sách địa điểm */}
+          
           {filteredDestinations.length > 0 ? (
             <ul style={{ maxHeight: "200px", overflowY: "auto", padding: 0 }}>
               {filteredDestinations.map((dest: any) => (
                 <li
                   key={dest._id}
                   onClick={() => {
-                    setLocation(dest.cityName); // Cập nhật địa điểm
-                    setIsLocationModalOpen(false); // Đóng modal
+                    setLocation(dest.cityName); 
+                    setIsLocationModalOpen(false); 
                   }}
                   style={{
                     listStyle: "none",
@@ -380,7 +380,52 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
           )}
         </Modal>
 
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Select
+            value={privacy}
+            onChange={(value) => setPrivacy(value)}
+            style={{ width: 120, marginRight: "10px" }}
+            dropdownStyle={{ borderRadius: "8px" }}
+            options={[
+              {
+                value: "public",
+                label: (
+                  <span>
+                    <span
+                      role="img"
+                      aria-label="public"
+                      style={{ marginRight: "8px" }}
+                    >
+                      🌍
+                    </span>
+                    Công khai
+                  </span>
+                ),
+              },
+              {
+                value: "private",
+                label: (
+                  <span>
+                    <span
+                      role="img"
+                      aria-label="private"
+                      style={{ marginRight: "8px" }}
+                    >
+                      🔒
+                    </span>
+                    Riêng tư
+                  </span>
+                ),
+              },
+            ]}
+          />
+
           <Button type="primary" onClick={handleOk} disabled={!text.trim()}>
             Đăng
           </Button>
