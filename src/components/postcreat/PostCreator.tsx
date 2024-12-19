@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Modal, Button, Input, Upload, message, Row, Col, Select } from "antd";
+import { Modal, Button, Input, Upload, message, Row, Col } from "antd";
 import {
   SmileOutlined,
   PictureOutlined,
@@ -139,6 +139,8 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
     setPrivacy("private");
     setEmotion("");
     setIsModalOpen(false);
+    setIsMediaUploadVisible(false);
+    setIsEmotionSelectorVisible(false);
     setIsMediaUploadVisible(false);
     setIsEmotionSelectorVisible(false);
   }, [text, fileList, privacy, emotion, location]);
