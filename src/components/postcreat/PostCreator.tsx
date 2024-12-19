@@ -163,7 +163,6 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
   const toggleMediaUpload = useCallback(() => {
     setIsMediaUploadVisible((prev) => {
       if (!prev) {
-        // Khi bật Media Upload, tắt Emotion Selector
         setIsEmotionSelectorVisible(false);
       }
       return !prev;
@@ -172,14 +171,13 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
 
   const toggleEmotionSelector = useCallback(() => {
     setIsEmotionSelectorVisible((prev) => {
-      // Khi bật Emotion Selector, không tắt Media Upload
       return !prev;
     });
   }, []);
 
   const handleCheckInClick = useCallback(() => {
-    setIsLocationModalOpen(true); // Bật modal Check-in
-    setIsEmotionSelectorVisible(false); // Tắt Emotion Selector khi mở Check-in
+    setIsLocationModalOpen(true); 
+    setIsEmotionSelectorVisible(false);
   }, []);
 
   return (
