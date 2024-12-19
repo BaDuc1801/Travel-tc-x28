@@ -1,13 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { Modal, Button, Input, Upload, message, Row, Col, Select } from "antd";
-import {
-  SmileOutlined,
-  PictureOutlined,
-  EnvironmentOutlined,
-} from "@ant-design/icons";
-import axios from "axios";
-import { Post } from "./post.type";
-import { PostProps } from "../Home";
+import React, { useState, useCallback, useEffect } from 'react';
+import { Modal, Button, Input, Upload, message, Row, Col, Select } from 'antd';
+import { SmileOutlined, PictureOutlined, EnvironmentOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import { Post } from './post.type';
+import { PostProps } from '../Home';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 type PostListProps = {
@@ -124,10 +121,8 @@ const PostCreator: React.FC<PostListProps> = ({ setListPost }) => {
           }
         }
 
-        message.success("Đăng bài viết thành công!");
-        const postsResponse = await axios.get(
-          "https://be-travel-tc-x28-1end.vercel.app/post",
-        );
+        message.success('Đăng bài viết thành công!');
+        const postsResponse = await axios.get('https://be-travel-tc-x28-1end.vercel.app/post');
         setListPost(postsResponse.data);
       }
     } catch (error) {
