@@ -4,7 +4,7 @@ import { SmileOutlined, PictureOutlined, EnvironmentOutlined } from '@ant-design
 import axios from 'axios';
 import { Post } from './post.type';
 import { PostProps } from '../Home';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 type PostListProps = {
