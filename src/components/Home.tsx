@@ -156,9 +156,9 @@ const Home: React.FC = () => {
     const handleMenuClick = (e: { key: string }) => {
         setSelectedKey(e.key);
     };
+    console.log(userData)
 
     const nav = useNavigate()
-
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
             {/* Phần bên trái */}
