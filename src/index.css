@@ -40,3 +40,11 @@
   font-weight: 600;
   font-size: 18px;
 }
+
+.description-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+  -webkit-box-orient: vertical; /* Cắt theo chiều dọc */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Thêm dấu "..." nếu vượt quá số dòng */
+}

@@ -10,6 +10,7 @@ import { Menu, MenuProps } from 'antd';
 import ListFollower from './ListFollower.tsx';
 import PostCreator from './postcreat/PostCreator.tsx';
 import { CommentProps } from './posts&comments/CommentCard.tsx';
+import { useNavigate } from 'react-router-dom';
 // import ChatApp from './chat.tsx';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
@@ -54,13 +55,18 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
     {
+        key: 'sub0',
+        label: 'Trang chủ',
+        // icon: <MailOutlined />,
+    },
+    {
         key: 'sub1',
         label: 'Hồ sơ cá nhân',
         // icon: <MailOutlined />,
     },
     {
         key: 'sub2',
-        label: 'Bài viết',
+        label: 'Bài viết của tôi',
         // icon: <AppstoreOutlined />,
     },
     {
@@ -139,9 +145,19 @@ const Home: React.FC = () => {
                 return total + (isMyComment ? 1 : 0) + countReplies(comment.replies);
             }, 0);
         };
-    
+
         return listPost.reduce((total, post) => total + (post.comments ? countReplies(post.comments) : 0), 0);
     };
+
+    const [selectedKey, setSelectedKey] = useState<string>('sub0');
+
+    const filteredPosts = selectedKey === 'sub2' ? listPost.filter(post => post.author._id === userData?._id) : listPost.filter(post => post.privacy === 'public');
+
+    const handleMenuClick = (e: { key: string }) => {
+        setSelectedKey(e.key);
+    };
+
+    const nav = useNavigate()
 
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
@@ -161,10 +177,11 @@ const Home: React.FC = () => {
                     <Menu
                         // onClick={onClick}
                         style={{ width: '100%' }}
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
+                        defaultSelectedKeys={['sub0']}
+                        defaultOpenKeys={['sub0']}
                         mode="inline"
                         items={items}
+                        onClick={handleMenuClick}
                     />
                 </div>
             </div>
@@ -178,7 +195,7 @@ const Home: React.FC = () => {
                     </div>
                     <div className="scroll-container flex overflow-x-auto whitespace-nowrap gap-2 p-4 snap-x snap-mandatory">
                         {desti.map((destination, index) => (
-                            <div key={index} className="snap-start">
+                            <div key={index} className="snap-start" onClick={() => nav(`/explore/${destination.cityName}`)}>
                                 <DestinationCard
                                     cityName={destination.cityName}
                                     img={destination.img}
@@ -187,8 +204,8 @@ const Home: React.FC = () => {
                         ))}
                     </div>
                 </div>
-                <PostCreator setListPost={setListPost}/>
-                <PostList listPost={listPost} setListPost={setListPost} />
+                <PostCreator setListPost={setListPost} />
+                <PostList listPost={filteredPosts} setListPost={setListPost} />
             </div>
 
             {/* Phần bên phải */}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaBookmark, FaHeart, FaLocationDot } from 'react-icons/fa6';
+import { FaBookmark, FaHeart, FaLocationDot, FaUser } from 'react-icons/fa6';
 import { FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { Modal } from 'antd';
 import ListComments from './ListComments.tsx';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import { PostProps } from '../Home.tsx';
 import { CommentProps } from './CommentCard.tsx';
 import { BsDot } from 'react-icons/bs';
+import { MdOutlinePublic } from 'react-icons/md';
 
 // PostCardProps to match the props passed to PostCard component
 interface PostCardProps {
@@ -108,7 +109,7 @@ const PostCard: React.FC<PostCardProps> = (props) => {
     //   const isAuthenticated = localStorage.getItem('authenticated') === 'true';
     //   const nav = useNavigate()
     //   const [authModal, setAuthModal] = useState<boolean>(false)
-    
+
     //   const checkAuth = () => {
     //     if (isAuthenticated === true) {
     //       setIsModalOpen(true)
@@ -131,7 +132,10 @@ const PostCard: React.FC<PostCardProps> = (props) => {
                             <FaLocationDot />
                             <span className='flex items-center'>{items.location} <BsDot /></span>
                         </div> : <div></div>}
-                        <p>{timeAgo(items.timestamp)}</p>
+                        <p className='flex items-center mr-2'>{timeAgo(items.timestamp)} <BsDot /></p>
+                        <div>
+                            {items?.privacy === "public" ? <MdOutlinePublic /> : <FaUser className='text-[12px]'/>}
+                        </div>
                     </div>
                 </div>
             </div>
