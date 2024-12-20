@@ -7,7 +7,6 @@ import axios from 'axios';
 import { PostProps } from '../Home.tsx';
 import { CommentProps } from './CommentCard.tsx';
 import { BsDot } from 'react-icons/bs';
-// import { useNavigate } from 'react-router-dom';
 
 // PostCardProps to match the props passed to PostCard component
 interface PostCardProps {
