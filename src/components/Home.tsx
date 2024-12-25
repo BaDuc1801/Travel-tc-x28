@@ -11,6 +11,7 @@ import ListFollower from './ListFollower.tsx';
 import PostCreator from './postcreat/PostCreator.tsx';
 import { CommentProps } from './posts&comments/CommentCard.tsx';
 import { useNavigate } from 'react-router-dom';
+import ListFollowing from './ListFollowing.tsx';
 // import ChatApp from './chat.tsx';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
@@ -156,9 +157,9 @@ const Home: React.FC = () => {
     const handleMenuClick = (e: { key: string }) => {
         setSelectedKey(e.key);
     };
-    console.log(userData)
 
     const nav = useNavigate()
+
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
             {/* Phần bên trái */}
@@ -210,8 +211,13 @@ const Home: React.FC = () => {
 
             {/* Phần bên phải */}
             <div className="w-1/4 bg-white sticky top-[88px] rounded-lg p-4 h-[calc(100vh-88px)]">
+                { selectedKey !== "sub3" ? <>
                 <p className='font-semibold'>Danh sách người đang theo dõi</p>
-                <ListFollower />
+                <ListFollowing
+                 />
+                </> : <> <p className='font-semibold'>Danh sách người theo dõi bạn</p>
+                <ListFollower /></>
+                }
             </div>
 
             {/* <div className='fixed bottom-0 right-[200px]'>
