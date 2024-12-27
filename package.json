@@ -15,6 +15,10 @@
     "axios": "^1.7.7",
     "emoji-picker-react": "^4.12.0",
     "leaflet": "^1.9.4",
+<<<<<<< HEAD
+=======
+    "nodemailer": "^6.9.16",
+>>>>>>> c4a525a0cbd2bc1b1d9fcc86e6edba757c0a96a1
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
