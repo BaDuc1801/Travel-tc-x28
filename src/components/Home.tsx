@@ -10,6 +10,8 @@ import { Menu, MenuProps } from 'antd';
 import ListFollower from './ListFollower.tsx';
 import PostCreator from './postcreat/PostCreator.tsx';
 import { CommentProps } from './posts&comments/CommentCard.tsx';
+import { useNavigate } from 'react-router-dom';
+import ListFollowing from './ListFollowing.tsx';
 // import ChatApp from './chat.tsx';
 
 const beUrl = import.meta.env.VITE_APP_BE_URL;
@@ -23,30 +25,30 @@ interface DestinationCardType {
 }
 
 export interface IUser {
-    _id: string;                        
-    name: string;                        
-    email: string;                       
-    password: string;                    
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
     profilePic: {
-        profilePicture: string;          
-        bannerImage?: string;            
+        profilePicture: string;
+        bannerImage?: string;
     };
-    followers: string[];                
-    following: string[];               
-    posts: string[];                     
+    followers: string[];
+    following: string[];
+    posts: string[];
     settings: {
-        privateAccount: boolean;         
+        privateAccount: boolean;
         notifications: {
-            email: boolean;             
-            push: boolean;          
-            sms: boolean;              
+            email: boolean;
+            push: boolean;
+            sms: boolean;
         };
     };
-    likedPosts: string[];                
-    bookmarkedPosts: string[];           
-    likedComments: string[];          
-    createdAt: string;            
-    updatedAt: string;                   
+    likedPosts: string[];
+    bookmarkedPosts: string[];
+    likedComments: string[];
+    createdAt: string;
+    updatedAt: string;
 }
 
 
@@ -54,13 +56,18 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
     {
+        key: 'sub0',
+        label: 'Trang chủ',
+        // icon: <MailOutlined />,
+    },
+    {
         key: 'sub1',
         label: 'Hồ sơ cá nhân',
         // icon: <MailOutlined />,
     },
     {
         key: 'sub2',
-        label: 'Bài viết',
+        label: 'Bài viết của tôi',
         // icon: <AppstoreOutlined />,
     },
     {
@@ -75,10 +82,10 @@ const items: MenuItem[] = [
 ];
 
 interface Author {
-    _id: string;                   
-    name: string;                          
+    _id: string;
+    name: string;
     profilePic: {
-        profilePicture: string;           
+        profilePicture: string;
     };
 }
 
@@ -93,22 +100,22 @@ interface Comment {
         };
     };
     content: string;
-    timestamp: Date; 
+    timestamp: Date;
     count: number;
     replies: CommentProps[];
 }
 
 export interface PostProps {
     _id: string;
-    content: string;                    
-    privacy: 'private' | 'public';       
-    type: 'text' | 'image';          
-    author: Author;                        
-    emotion?: string;                     
-    timestamp: string;            
-    location?: string;                    
-    img?: string[];                        
-    comments?: Comment[];                   
+    content: string;
+    privacy: 'private' | 'public';
+    type: 'text' | 'image';
+    author: Author;
+    emotion?: string;
+    timestamp: string;
+    location?: string;
+    img?: string[];
+    comments?: Comment[];
 }
 
 const Home: React.FC = () => {
@@ -132,6 +139,27 @@ const Home: React.FC = () => {
         fetchData();
     }, []);
 
+    const countComments = () => {
+        const countReplies = (comments: CommentProps[]): number => {
+            return comments.reduce((total, comment) => {
+                const isMyComment = comment.author.name === userData?.name;
+                return total + (isMyComment ? 1 : 0) + countReplies(comment.replies);
+            }, 0);
+        };
+
+        return listPost.reduce((total, post) => total + (post.comments ? countReplies(post.comments) : 0), 0);
+    };
+
+    const [selectedKey, setSelectedKey] = useState<string>('sub0');
+
+    const filteredPosts = selectedKey === 'sub2' ? listPost.filter(post => post.author._id === userData?._id) : listPost.filter(post => post.privacy === 'public');
+
+    const handleMenuClick = (e: { key: string }) => {
+        setSelectedKey(e.key);
+    };
+
+    const nav = useNavigate()
+
     return (
         <div className="flex mt-8 mx-[10%] gap-8">
             {/* Phần bên trái */}
@@ -141,19 +169,20 @@ const Home: React.FC = () => {
                     <p className='text-center mt-4 text-xl font-semibold pb-2'>{userData?.name}</p>
                 </div>
                 <div className='grid grid-cols-2 grid-rows-2 bg-white p-4'>
-                    <div className='flex items-center gap-2 text-red-500'><p className='rounded-full bg-pink-100 w-10 h-10 flex items-center justify-center'><FaHandHoldingHeart /></p><div className='flex flex-col'><p>Cảm xúc</p><p className='text-black'>0</p></div></div>
-                    <div className='flex items-center gap-2 text-green-500'><p className='rounded-full bg-green-100 w-10 h-10 flex items-center justify-center'><BiSolidCommentDetail /></p><div className='flex flex-col'><p>Bình luận</p><p className='text-black'>0</p></div></div>
-                    <div className='flex items-center gap-2 text-blue-500 '><p className='rounded-full bg-blue-100 w-10 h-10 flex items-center justify-center'><BsFilePostFill /></p><div className='flex flex-col'><p>Bài đăng</p><p className='text-black'>0</p></div></div>
-                    <div className='flex items-center gap-2 text-purple-500 '><p className='rounded-full bg-purple-100 w-10 h-10 flex items-center justify-center'><RiUserFollowFill /></p><div className='flex flex-col'><p>Theo dõi</p><p className='text-black'>0</p></div></div>
+                    <div className='flex items-center gap-2 text-red-500'><p className='rounded-full bg-pink-100 w-10 h-10 flex items-center justify-center'><FaHandHoldingHeart /></p><div className='flex flex-col'><p>Cảm xúc</p><p className='text-black'>{userData?.likedPosts.length || 0}</p></div></div>
+                    <div className='flex items-center gap-2 text-green-500'><p className='rounded-full bg-green-100 w-10 h-10 flex items-center justify-center'><BiSolidCommentDetail /></p><div className='flex flex-col'><p>Bình luận</p><p className='text-black'>{countComments()}</p></div></div>
+                    <div className='flex items-center gap-2 text-blue-500 '><p className='rounded-full bg-blue-100 w-10 h-10 flex items-center justify-center'><BsFilePostFill /></p><div className='flex flex-col'><p>Bài đăng</p><p className='text-black'>{userData?.posts.length || 0}</p></div></div>
+                    <div className='flex items-center gap-2 text-purple-500 '><p className='rounded-full bg-purple-100 w-10 h-10 flex items-center justify-center'><RiUserFollowFill /></p><div className='flex flex-col'><p>Theo dõi</p><p className='text-black'>{userData?.following.length || 0}</p></div></div>
                 </div>
                 <div className='mt-2'>
                     <Menu
                         // onClick={onClick}
                         style={{ width: '100%' }}
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
+                        defaultSelectedKeys={['sub0']}
+                        defaultOpenKeys={['sub0']}
                         mode="inline"
                         items={items}
+                        onClick={handleMenuClick}
                     />
                 </div>
             </div>
@@ -167,7 +196,7 @@ const Home: React.FC = () => {
                     </div>
                     <div className="scroll-container flex overflow-x-auto whitespace-nowrap gap-2 p-4 snap-x snap-mandatory">
                         {desti.map((destination, index) => (
-                            <div key={index} className="snap-start">
+                            <div key={index} className="snap-start" onClick={() => nav(`/explore/${destination.cityName}`)}>
                                 <DestinationCard
                                     cityName={destination.cityName}
                                     img={destination.img}
@@ -176,14 +205,19 @@ const Home: React.FC = () => {
                         ))}
                     </div>
                 </div>
-                <PostCreator setListPost={setListPost}/>
-                <PostList listPost={listPost} setListPost={setListPost} />
+                <PostCreator setListPost={setListPost} />
+                <PostList listPost={filteredPosts} setListPost={setListPost} />
             </div>
 
             {/* Phần bên phải */}
             <div className="w-1/4 bg-white sticky top-[88px] rounded-lg p-4 h-[calc(100vh-88px)]">
+                { selectedKey !== "sub3" ? <>
                 <p className='font-semibold'>Danh sách người đang theo dõi</p>
-                <ListFollower />
+                <ListFollowing
+                 />
+                </> : <> <p className='font-semibold'>Danh sách người theo dõi bạn</p>
+                <ListFollower /></>
+                }
             </div>
 
             {/* <div className='fixed bottom-0 right-[200px]'>

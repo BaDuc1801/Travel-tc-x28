@@ -92,7 +92,7 @@ const ExploreDetails: React.FC = () => {
                             <Select
                                 className='w-[80%] h-10'
                                 showSearch
-                                placeholder={<span className='text-white'>{cityName}</span>}
+                                placeholder={<span className='text-black'>{cityName}</span>}
                                 optionFilterProp="label"
                                 onChange={handleSearchClick}
                                 filterOption={(inputValue, option) => {
@@ -119,14 +119,15 @@ const ExploreDetails: React.FC = () => {
                 <div>
                     {!city ? "" :
                         city.destinations.map((destination, index) => (
-                            <div key={index} className="flex mx-8 h-[150px] bg-white rounded-md overflow-hidden mb-8">
+                            <div key={index} className="flex mx-8 h-[200px] bg-white rounded-md overflow-hidden mb-8">
                                 <div className='w-1/2 mr-2'>
                                     <img src={destination.img} className='h-full w-full rounded-md ' />
                                 </div>
                                 <div className='w-1/2 p-2 flex flex-col justify-between'>
                                     <div>
                                         <p className='text-xl font-semibold'>{destination.destiName}</p>
-                                        <p className='flex items-center gap-1'><IoLocationSharp className='text-red-500' /> {destination.city}</p>
+                                        <p className='flex items-center gap-1 py-1'><IoLocationSharp className='text-red-500' /> {destination.city}</p>
+                                        <p className='description-text'>{destination?.description}</p>
                                     </div>
                                     <button
                                         className='bg-red-500 self-end px-3 py-2 rounded-lg text-white font-medium hover:bg-red-600'
@@ -156,12 +157,12 @@ const ExploreDetails: React.FC = () => {
                         <h2 className='text-xl font-bold my-4'>{selectedDestination?.destiName}</h2>
                         <p>{selectedDestination?.description}</p>
                     </div>
-                    <p className='text-xl font-bold my-4'>Một số bài viết liên quan</p>
-                    <PostList listPost={listPost} setListPost={setListPost}/>
+                    <p className='text-xl font-bold my-4'>Một số bài viết về {selectedDestination?.city}</p>
+                    <PostList listPost={listPost.filter(post => post.location === selectedDestination?.city)} setListPost={setListPost} />
                 </div>
             )}
             {/* Phần bên trái: Bản đồ */}
-            <div className='flex-grow'>
+            <div className='flex-grow z-10'>
                 <MapContainer
                     center={coor}
                     zoom={13}
@@ -183,9 +184,6 @@ const ExploreDetails: React.FC = () => {
                     )}
                 </MapContainer>
             </div>
-
-            {/* Phần bên phải: Chi tiết địa điểm (chỉ hiện khi isDetailVisible = true) */}
-
         </div>
     );
 };

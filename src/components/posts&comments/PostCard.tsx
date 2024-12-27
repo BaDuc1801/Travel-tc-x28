@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FaBookmark, FaHeart, FaLocationDot } from 'react-icons/fa6';
+import { FaBookmark, FaHeart, FaLocationDot, FaUser } from 'react-icons/fa6';
 import { FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { Modal } from 'antd';
 import ListComments from './ListComments.tsx';
 import axios from 'axios';
 import { PostProps } from '../Home.tsx';
+import { CommentProps } from './CommentCard.tsx';
+import { BsDot } from 'react-icons/bs';
+import { MdOutlinePublic } from 'react-icons/md';
 
 // PostCardProps to match the props passed to PostCard component
 interface PostCardProps {
@@ -43,8 +46,8 @@ const PostCard: React.FC<PostCardProps> = (props) => {
     useEffect(() => {
         const fetchPostStatus = async () => {
             try {
-                const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '[]'); // Replace with API call if needed
-                const bookmarkPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '[]'); // Replace with API call if needed
+                const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '[]');
+                const bookmarkPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '[]');
 
                 setLiked(likedPosts.includes(items._id));
                 setSaved(bookmarkPosts.includes(items._id));
@@ -65,6 +68,7 @@ const PostCard: React.FC<PostCardProps> = (props) => {
             console.error('Error liking post', error);
         }
     };
+
     const toggleSave = async () => {
         try {
             setSaved(!saved);
@@ -78,23 +82,41 @@ const PostCard: React.FC<PostCardProps> = (props) => {
     const updateLikedPosts = () => {
         let likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '[]');
         if (liked) {
-            likedPosts = likedPosts.filter((id: string) => id !== items._id); // Remove if already liked
+            likedPosts = likedPosts.filter((id: string) => id !== items._id);
         } else {
-            likedPosts.push(items._id); // Add to liked posts
+            likedPosts.push(items._id);
         }
         localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
     };
 
-    // Update the localStorage or backend for bookmarked posts
     const updateBookmarkPosts = () => {
         let bookmarkPosts = JSON.parse(localStorage.getItem('bookmarkPosts') || '[]');
         if (saved) {
-            bookmarkPosts = bookmarkPosts.filter((id: string) => id !== items._id); // Remove if already saved
+            bookmarkPosts = bookmarkPosts.filter((id: string) => id !== items._id);
         } else {
-            bookmarkPosts.push(items._id); // Add to bookmarked posts
+            bookmarkPosts.push(items._id);
         }
         localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkPosts));
     };
+
+    const countTotalComments = (comments: CommentProps[] | undefined): number => {
+        if (!comments) return 0;
+        return comments.reduce((total, comment) => {
+            return total + 1 + countTotalComments(comment.replies);
+        }, 0);
+    };
+
+    //   const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+    //   const nav = useNavigate()
+    //   const [authModal, setAuthModal] = useState<boolean>(false)
+
+    //   const checkAuth = () => {
+    //     if (isAuthenticated === true) {
+    //       setIsModalOpen(true)
+    //     } else {
+    //       setAuthModal(true)
+    //     }
+    //   }
 
     return (
         <div className='p-4 rounded-lg shadow-xl mt-2 bg-white'>
@@ -105,13 +127,18 @@ const PostCard: React.FC<PostCardProps> = (props) => {
                         <p className='font-semibold'>{items?.author?.name}</p>
                         <p>{items.emotion}</p>
                     </div>
-                    <p>{timeAgo(items.timestamp)}</p>
+                    <div className='flex items-center'>
+                        {items?.location ? <div className='flex items-center gap-2 mr-2'>
+                            <FaLocationDot />
+                            <span className='flex items-center'>{items.location} <BsDot /></span>
+                        </div> : <div></div>}
+                        <p className='flex items-center mr-2'>{timeAgo(items.timestamp)} <BsDot /></p>
+                        <div>
+                            {items?.privacy === "public" ? <MdOutlinePublic /> : <FaUser className='text-[12px]'/>}
+                        </div>
+                    </div>
                 </div>
             </div>
-            {items?.location ? <div className='flex items-center mt-4 mb-2 gap-2'>
-                <FaLocationDot />
-                <span>{items.location}</span>
-            </div> : <div className='mt-2'></div>}
             <div className='mb-4'>
                 <p>{items.content}</p>
             </div>
@@ -138,7 +165,7 @@ const PostCard: React.FC<PostCardProps> = (props) => {
                     <div className='flex items-center gap-1' onClick={() => { setIsModalOpen(true) }}>
                         <FaRegComment />
                         <p className='text-sm font-semibold'>
-                            {Array.isArray(items?.comments) ? items.comments?.length : 0}
+                            {Array.isArray(items?.comments) ? countTotalComments(items.comments) : 0}
                         </p>
                     </div>
                 </div>
@@ -215,6 +242,15 @@ const PostCard: React.FC<PostCardProps> = (props) => {
                     {items.comments && <ListComments comment={items.comments} postId={items._id} setListPost={setListPost} />}
                 </div>
             </Modal>
+            {/* <Modal
+                      open={authModal}
+                      onCancel={() => setAuthModal(false)}
+                      onOk={() => nav('/auth/login')}
+                      okText="Đăng nhập"
+                      style={{ top: 50 }}
+                    >
+                        <p>Bạn cần đăng nhập để có thể đăng bài</p>
+                    </Modal> */}
         </div>
     );
 };

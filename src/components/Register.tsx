@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
+import { GiFlexibleStar } from "react-icons/gi";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -84,14 +85,18 @@ const Register: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center rounded-xl bg-white bg-opacity-60 p-5 py-10 shadow-2xl">
-      <h1 className="mb-2 text-4xl font-semibold">Register</h1>
+      <div className="flex items-center justify-center text-red-500">
+        <GiFlexibleStar className="text-3xl" />
+        <p className="text-2xl font-bold ml-2">Travel</p>
+      </div>
+      <h2 className="mb-2 text-3xl font-semibold mt-2">Đăng kí</h2>
       <form
         onSubmit={handleSubmit(onSubmit, showErrorMessages)}
         className="flex flex-col gap-7"
       >
         <div>
           <label className="mb-2 font-semibold" htmlFor="name">
-            Name<span className="mb-2 text-red-500">*</span>:
+            Tên tài khoản<span className="mb-2 text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -126,7 +131,7 @@ const Register: React.FC = () => {
         </div>
         <div>
           <label className="font-semibold" htmlFor="password">
-            Password<span className="text-red-500">*</span>:
+            Mật khẩu<span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}
@@ -142,13 +147,13 @@ const Register: React.FC = () => {
           />
           {passwordValue && !/[@#$%&*!]/.test(passwordValue) && (
             <p className="password-requirements">
-              Password must contain at least 1 special character
+              Mật khẩu cần một kí tự đặc biệt
             </p>
           )}
         </div>
         <div>
           <label className="font-semibold" htmlFor="confirmPassword">
-            Confirm Password<span className="text-red-500">*</span>:
+            Xác nhận mật khẩu <span className="text-red-500">*</span>:
           </label>
           <Controller
             control={control}
