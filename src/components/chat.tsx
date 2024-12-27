@@ -19,13 +19,15 @@
 // const ChatApp: React.FC = () => {
 //   const [messages, setMessages] = useState<ChatMessage[]>([]);
 //   const [input, setInput] = useState('');
-//   const [currentUser, setCurrentUser] = useState<User>({ id: 'user1', name: 'User 1' });
-//   const [recipient, setRecipient] = useState<User>({ id: 'user2', name: 'User 2' });
+//   const [currentUser, setCurrentUser] = useState<User | null>(null);
+//   const [recipient, setRecipient] = useState<User | null>(null);
 //   const chatBoxRef = useRef<HTMLDivElement>(null);
 
 //   // Hàm gửi tin nhắn
-//   const sendMessage = () => {
+//   const sendMessage = async () => {
 //     if (input.trim() === '') return;
+
+//     if (!currentUser || !recipient) return; 
 
 //     const newMessage: ChatMessage = {
 //       id: Date.now(),
@@ -35,12 +37,33 @@
 //       timestamp: Date.now(),
 //     };
 
-//     // Cập nhật danh sách tin nhắn với tin nhắn mới
-//     setMessages((prevMessages) => {
-//       const updatedMessages = [...prevMessages, newMessage];
-//       updatedMessages.sort((a, b) => a.timestamp - b.timestamp);  // Sắp xếp theo thời gian gửi
-//       return updatedMessages;
-//     });
+//     // Gửi tin nhắn đến server
+//     try {
+//       const response = await fetch('http://localhost:8080/chat/send-message', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           sender: currentUser.id,
+//           receiver: recipient.id,
+//           message: input,
+//         }),
+//       });
+
+//       if (response.ok) {
+//         // Cập nhật danh sách tin nhắn với tin nhắn mới
+//         setMessages((prevMessages) => {
+//           const updatedMessages = [...prevMessages, newMessage];
+//           updatedMessages.sort((a, b) => a.timestamp - b.timestamp);  // Sắp xếp theo thời gian gửi
+//           return updatedMessages;
+//         });
+//       } else {
+//         console.error('Failed to send message');
+//       }
+//     } catch (error) {
+//       console.error('Error sending message:', error);
+//     }
 
 //     setInput('');
 //   };
@@ -52,51 +75,41 @@
 //     }
 //   }, [messages]);
 
-//   // Hàm để tạo tin nhắn giả lập cho demo
-//   const generateDemoMessages = () => {
-//     const demoMessages: ChatMessage[] = [
-//       {
-//         id: 1,
-//         text: 'Chào bạn!',
-//         senderId: 'user1',
-//         receiverId: 'user2',
-//         timestamp: Date.now() - 10000,
-//       },
-//       {
-//         id: 2,
-//         text: 'Chào, bạn khỏe không?',
-//         senderId: 'user2',
-//         receiverId: 'user1',
-//         timestamp: Date.now() - 8000,
-//       },
-//       {
-//         id: 3,
-//         text: 'Mình ổn, cảm ơn bạn. Bạn thì sao?',
-//         senderId: 'user1',
-//         receiverId: 'user2',
-//         timestamp: Date.now() - 6000,
-//       },
-//       {
-//         id: 4,
-//         text: 'Mình cũng khỏe, cảm ơn bạn đã hỏi!',
-//         senderId: 'user2',
-//         receiverId: 'user1',
-//         timestamp: Date.now() - 4000,
-//       },
-//       {
-//         id: 5,
-//         text: 'Đã lâu không gặp. Cùng hẹn nhau gặp mặt nhé!',
-//         senderId: 'user1',
-//         receiverId: 'user2',
-//         timestamp: Date.now() - 2000,
-//       },
-//     ];
-
-//     setMessages(demoMessages);
-//   };
-
+//   // Lấy cuộc trò chuyện từ backend
 //   useEffect(() => {
-//     generateDemoMessages();
+//     const fetchConversation = async () => {
+//       if (!currentUser || !recipient) return;
+
+//       try {
+//         const response = await fetch(
+//           `http://localhost:8080/chat/conversation?sender=${currentUser.id}&receiver=${recipient.id}`
+//         );
+//         if (response.ok) {
+//           const conversation = await response.json();
+//           setMessages(conversation.messages);
+//         } else {
+//           console.error('Failed to fetch conversation');
+//         }
+//       } catch (error) {
+//         console.error('Error fetching conversation:', error);
+//       }
+//     };
+
+//     fetchConversation();
+//   }, [currentUser, recipient]);
+
+//   // Lấy currentUser và recipient từ localStorage khi component mount
+//   useEffect(() => {
+//     const storedCurrentUser = JSON.parse(localStorage.getItem('user') || '{}');
+//     const storedRecipient = JSON.parse(localStorage.getItem('reply') || '{}');
+
+//     if (storedCurrentUser) {
+//       setCurrentUser(JSON.parse(storedCurrentUser.id));
+//     }
+
+//     if (storedRecipient) {
+//       setRecipient(JSON.parse(storedRecipient));
+//     }
 //   }, []);
 
 //   return (
@@ -105,13 +118,11 @@
 //         {messages.map((message) => (
 //           <div
 //             key={message.id}
-//             className={`flex ${
-//               message.senderId === currentUser.id ? 'justify-end' : 'justify-start'
-//             }`}
+//             className={`flex ${message.senderId === currentUser?.id ? 'justify-end' : 'justify-start'}`}
 //           >
 //             <div
 //               className={`max-w-xs p-3 rounded-lg ${
-//                 message.senderId === currentUser.id ? 'bg-blue-500 text-white ml-8' : 'bg-gray-300 mr-8'
+//                 message.senderId === currentUser?.id ? 'bg-blue-500 text-white ml-8' : 'bg-gray-300 mr-8'
 //               }`}
 //             >
 //               <p>{message.text}</p>

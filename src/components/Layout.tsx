@@ -51,7 +51,12 @@ const Layout: React.FC = () => {
                                 <>
                                     <div className="absolute top-[40px] right-0 z-50 rounded-md overflow-hidden bg-white">
                                         <Link to={`/user/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Hồ sơ cá nhân</Link>
-                                        <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false") }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Đăng xuất</Link>
+                                        <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false");
+                                            window.localStorage.removeItem('user');
+                                            window.localStorage.removeItem('likedPosts');
+                                            window.localStorage.removeItem('bookmarkedPosts');
+                                            window.localStorage.removeItem('likedComments');
+                                         }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Đăng xuất</Link>
                                     </div>
                                 </>
                             )}
