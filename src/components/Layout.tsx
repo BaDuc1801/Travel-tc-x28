@@ -51,18 +51,14 @@ const Layout: React.FC = () => {
                             {showMenu && (
                                 <>
                                     <div className="absolute top-[40px] right-0 z-50 rounded-md overflow-hidden bg-white">
-<<<<<<< HEAD
-                                        <Link to={`/user/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Hồ sơ cá nhân</Link>
+                                        <Link to={`/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</Link>
                                         <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false");
                                             window.localStorage.removeItem('user');
                                             window.localStorage.removeItem('likedPosts');
                                             window.localStorage.removeItem('bookmarkedPosts');
                                             window.localStorage.removeItem('likedComments');
                                          }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Đăng xuất</Link>
-=======
-                                        <Link to={`/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</Link>
-                                        <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false") }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
->>>>>>> c4a525a0cbd2bc1b1d9fcc86e6edba757c0a96a1
+
                                     </div>
                                 </>
                             )}
