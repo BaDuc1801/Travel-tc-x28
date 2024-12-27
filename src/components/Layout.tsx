@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { GiFlexibleStar } from 'react-icons/gi';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Obj } from '../interface';
 
 const Layout: React.FC = () => {
     const [active, setActive] = useState("Home")
@@ -12,7 +13,7 @@ const Layout: React.FC = () => {
     };
 
     const isAuthenticated = window.localStorage.getItem('authenticated') === 'true';
-    const user: any = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: Obj = JSON.parse(localStorage.getItem('user') || '{}');
 
     const location = useLocation();
      
