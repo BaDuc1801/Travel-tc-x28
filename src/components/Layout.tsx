@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { GiFlexibleStar } from 'react-icons/gi';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Obj } from '../interface';
 
 const Layout: React.FC = () => {
     const [active, setActive] = useState("Home")
@@ -12,7 +13,7 @@ const Layout: React.FC = () => {
     };
 
     const isAuthenticated = window.localStorage.getItem('authenticated') === 'true';
-    const user: any = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: Obj = JSON.parse(localStorage.getItem('user') || '{}');
 
     const location = useLocation();
      
@@ -50,8 +51,8 @@ const Layout: React.FC = () => {
                             {showMenu && (
                                 <>
                                     <div className="absolute top-[40px] right-0 z-50 rounded-md overflow-hidden bg-white">
-                                        <Link to={`/user/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Hồ sơ cá nhân</Link>
-                                        <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false") }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Đăng xuất</Link>
+                                        <Link to={`/profile/${user.id}`} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100 whitespace-nowrap">Personal Profile</Link>
+                                        <Link to={'/login'} onClick={() => { localStorage.setItem("authenticated", "false") }} className="block px-4 py-2 text-black rounded-md bg-white hover:bg-red-100">Log Out</Link>
                                     </div>
                                 </>
                             )}

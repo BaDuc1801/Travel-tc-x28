@@ -2,6 +2,7 @@ import { Button, Form, Input } from "antd";
 import React, { useState, useContext } from "react";
 import EditDetailsContext from "../../context/EditDetailsContext.ts";
 import { Obj } from "../../interface/index.ts";
+import axios from "axios";
 
 const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
   // State to track which section is active
@@ -10,14 +11,20 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
   const [changePw, setChangePassword] = useState(false);
   const [form] = Form.useForm();
 
-  const onFinish= (values: Obj) => {
-    console.log(values)
-  }
+  const onFinish = async (values: Obj) => {
+    try {
+      console.log("Submitting:", values);
+      const response = await axios.put(`http://localhost:8080/user/${userData._id}`,values);
+      console.log("Server: ", response.data);
+    } catch (error) {
+      console.log("onFinish error: ", error);
+    }
+  };
 
-  const renderArray = (array:Obj) => {
+  const renderArray = (array: Obj) => {
     if (!array || array.length == 0) return <span> None</span>;
     {
-      return array.map((item:string, index:number) => (
+      return array.map((item: string, index: number) => (
         <span key={index} className="ml-1">
           {item}
         </span>
@@ -37,38 +44,49 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
       default:
         return editStatus ? (
           <Form form={form} onFinish={onFinish} className="text-xl">
-            <div>
-              Pronouns:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.pronoun}`}
-              />
-            </div>
-            <div>
-              DOB:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.dob}`}
-              />
-            </div>
-            <div>
-              Workplaces:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.workplaces}`}
-              />
-            </div>
-            <div>
-              Relationships:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.relationship}`}
-              />
-            </div>
+            <Form.Item name="pronoun">
+              <div>
+                Pronouns:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.pronoun}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="dob">
+              <div>
+                DOB:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.dob}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="workplaces">
+              <div>
+                Workplaces:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.workplaces}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="relationships">
+              <div>
+                Relationships:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.relationship}`}
+                />
+              </div>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Save
+            </Button>
           </Form>
         ) : (
           <div className="text-xl">
@@ -80,32 +98,41 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
         );
       case "Contact":
         return editStatus ? (
-          <div className="text-xl">
-            <div>
-              Phone:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.phone}`}
-              />
-            </div>
-            <div>
-              Email:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.email}`}
-              />
-            </div>
-            <div>
-              Other socials:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.socials}`}
-              />
-            </div>
-          </div>
+          <Form form={form} onFinish={onFinish} className="text-xl">
+            <Form.Item name="phone">
+              <div>
+                Phone:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.phone}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="email">
+              <div>
+                Email:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.email}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="socials">
+              <div>
+                Other socials:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.socials}`}
+                />
+              </div>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Save
+            </Button>
+          </Form>
         ) : (
           <div className="text-xl">
             <p>Phone: {userData?.phone}</p>
@@ -115,39 +142,47 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
         );
       case "Details":
         return editStatus ? (
-          <div className="text-xl">
-            <div>
-              Birth country:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.phone}`}
-              />
-            </div>
-            <div>
-              Nationality:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.email}`}
-              />
-            </div>
-            <div>
-              Other Education:
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.socials}`}
-              />
-            </div>
-            <div>
-              Email:{" "}
-              <Input
-                className="h-6 w-80"
-                size="small"
-                placeholder={`${userData?.socials}`}
-              />
-            </div>
+          <Form form={form} onFinish={onFinish} className="text-xl">
+            <Form.Item name="cob">
+              <div>
+                Birth country:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.cob}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="nationality">
+              <div>
+                Nationality:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.nationality}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="education">
+              <div>
+                Other Education:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.education}`}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name="email">
+              <div>
+                Email:
+                <Input
+                  className="h-6 w-80"
+                  size="small"
+                  placeholder={`${userData?.email}`}
+                />
+              </div>
+            </Form.Item>
             <br />
             {changePw ? (
               <div>
@@ -175,14 +210,19 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
                     placeholder={`Verify Password`}
                   />
                 </div>
-                <Button onClick={() => setChangePassword(!changePw)}>Cancel</Button>
+                <Button onClick={() => setChangePassword(!changePw)}>
+                  Cancel
+                </Button>
               </div>
             ) : (
               <Button onClick={() => setChangePassword(!changePw)}>
-                Change password{" "}
+                Change password
               </Button>
             )}
-          </div>
+            <Button type="primary" htmlType="submit">
+              Save
+            </Button>
+          </Form>
         ) : (
           <div className="text-xl">
             <p>Birth country: {userData?.cob}</p>
@@ -216,7 +256,9 @@ const UserDetails: React.FC<{ userData: Obj }> = ({ userData }) => {
                     placeholder={`Verify Password`}
                   />
                 </div>
-                <Button onClick={() => setChangePassword(!changePw)}>Cancel</Button>
+                <Button onClick={() => setChangePassword(!changePw)}>
+                  Cancel
+                </Button>
               </div>
             ) : (
               <Button onClick={() => setChangePassword(!changePw)}>
